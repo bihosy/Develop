@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -219,7 +220,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 		this.setTitle("회원가입");
 		this.setSize(480, 800);
 		this.setVisible(true);
-
+		this.setResizable(false);
 	}
 
 	@Override
@@ -237,25 +238,25 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 		if (e.getSource() == btn_Reg) {
 
 			if (tf_ID.getText().equals("")) {
-				System.out.println("아이디빈칸");
+				JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.", "아이디 입력", JOptionPane.ERROR_MESSAGE);
 			} else if (lb_JB.getText().equals("중복된 ID 입니다.")) {
-				System.out.println("아이디 확인");
+				JOptionPane.showMessageDialog(null, "아이디가 이미 존재합니다. 다른 아이디를 입력해주세요.", "아이디 중복", JOptionPane.ERROR_MESSAGE);
 			} else if (pf_PW.getText().equals("")) {
-				System.out.println("비밀번호빈칸");
+				JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.", "비밀번호 입력", JOptionPane.ERROR_MESSAGE);
 			} else if (pf_PWC.getText().equals("")) {
-				System.out.println("비밀번호확인빈칸");
+				JOptionPane.showMessageDialog(null, "비밀번호 확인란을 입력해주세요.", "비밀번호 확인란 입력", JOptionPane.ERROR_MESSAGE);
 			} else if (tf_Name.getText().equals("")) {
-				System.out.println("이름빈칸");
+				JOptionPane.showMessageDialog(null, "이름을 입력해주세요.", "이름 입력", JOptionPane.ERROR_MESSAGE);
 			}
 			
 			else if (s.equals("")){
-				System.out.println("성별 확인");
+				JOptionPane.showMessageDialog(null, "성별을 체크해주세요.", "성별 체크", JOptionPane.ERROR_MESSAGE);
 			}
 
 			else if (tf_Phone2.getText().equals("")|| tf_Phone3.getText().equals("")) {
-				System.out.println("전화번호빈칸");
+				JOptionPane.showMessageDialog(null, "휴대전화번호를 입력해주세요.", "휴대전화번호 입력", JOptionPane.ERROR_MESSAGE);
 			} else if (tf_Add1.getText().equals("")) {
-				System.out.println("주소빈칸");
+				JOptionPane.showMessageDialog(null, "주소를 입력해주세요.", "주소 입력", JOptionPane.ERROR_MESSAGE);
 			}
 
 			else if (pf_PW.getText().equals(pf_PWC.getText())) {
@@ -307,7 +308,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 						e1.printStackTrace();
 					}
 				}
-
+				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.", "회원가입 완료", JOptionPane.PLAIN_MESSAGE);
 				this.setDefaultCloseOperation(3);
 				setVisible(false);
 				Table_model.setRowCount(0);
@@ -315,9 +316,8 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 			}
 
 			else {
-				System.out.println("비번다르다");
+				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다. 다시 입력해주세요.", "비밀번호 확인 오류", JOptionPane.ERROR_MESSAGE);
 			}
-
 		}
 		if(e.getSource() == btn_Cnl){
 			this.setDefaultCloseOperation(3);

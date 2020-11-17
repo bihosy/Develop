@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -108,8 +109,9 @@ public class idSearch extends JFrame implements ActionListener {
 		this.add(btn_idS);
 		this.add(lb_M);
 		this.add(lb_M2);
-
+		
 		this.setVisible(true);
+		this.setResizable(false);
 
 	}
 
@@ -156,7 +158,7 @@ public class idSearch extends JFrame implements ActionListener {
 			}
 		}
 		if(i==0){
-			System.out.println("존재하는 계정이 없습니다.");
+			JOptionPane.showMessageDialog(null, "해당 정보로 가입한 계정이 존재하지 않습니다.", "계정 찾기 오류", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

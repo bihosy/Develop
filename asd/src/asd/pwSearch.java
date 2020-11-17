@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -118,7 +119,7 @@ public class pwSearch extends JFrame implements ActionListener {
 		this.add(lb_M2);
 
 		this.setVisible(true);
-
+		this.setResizable(false);
 	}
 
 	@Override
@@ -168,7 +169,7 @@ public class pwSearch extends JFrame implements ActionListener {
 			}
 		}
 		if(i==0){
-			System.out.println("해당하는 계정이 없습니다.");
+			JOptionPane.showMessageDialog(null, "해당 계정이 존재하지 않습니다.", "비밀번호 찾기 오류", JOptionPane.ERROR_MESSAGE);
 		}
 		this.setVisible(false);
 		this.setDefaultCloseOperation(3);

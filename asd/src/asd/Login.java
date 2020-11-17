@@ -15,13 +15,14 @@ import java.io.PrintWriter;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class Login extends JFrame implements ActionListener {
+public class Login extends JFrame implements ActionListener{
 	
 	//--------DB 테이블 관련 --------//
 	String header[] = { "ID", "PW", "이름", "성별", "휴대폰", "주소", "권한" };
@@ -42,6 +43,7 @@ public class Login extends JFrame implements ActionListener {
 	JTextField tf_ID; // ID 텍스트 필드
 	JPasswordField pf_PW;// PW 패스워드필드
 	JPanel pnl_IP; // ID/PW 판넬
+	JLabel lb_SH; // 슬래시(/), 찾기(Search) 라벨
 
 	
 	
@@ -70,20 +72,33 @@ public class Login extends JFrame implements ActionListener {
 		
 		lb_ID = new JLabel("ID");
 		lb_PW = new JLabel("PW");
-		tf_ID = new JTextField(10);
-		pf_PW = new JPasswordField(10);
+		lb_SH = new JLabel("／");
+		
+		tf_ID = new JTextField();
+		pf_PW = new JPasswordField();
 		btn_Login = new JButton("Login");
 		btn_Join = new JButton("회원가입");
-		btn_idSearch = new JButton("아이디 찾기");
+		btn_idSearch = new JButton("아이디");
 		btn_pwSearch = new JButton("패스워드 찾기");
 
 		pnl_IP = new JPanel();
-		pnl_IP.setLayout(new FlowLayout());
+		pnl_IP.setLayout(null);
 
 		btn_Login.addActionListener(this);
 		btn_Join.addActionListener(this);
 		btn_idSearch.addActionListener(this);
 		btn_pwSearch.addActionListener(this);
+		
+		lb_ID.setBounds(50, 30, 20, 25);
+		tf_ID.setBounds(100, 30, 150, 25);
+		lb_PW.setBounds(50, 80, 20, 25);
+		pf_PW.setBounds(100, 80, 150, 25);
+		btn_Login.setBounds(270, 30, 100, 75);
+		btn_Join.setBounds(60, 130, 90, 25);
+		btn_idSearch.setBounds(180, 130, 90, 25);
+		lb_SH.setBounds(250, 130, 20, 25);
+		btn_pwSearch.setBounds(250, 130, 125, 25);
+		
 
 		pnl_IP.add(lb_ID);
 		pnl_IP.add(tf_ID);
@@ -93,6 +108,10 @@ public class Login extends JFrame implements ActionListener {
 		pnl_IP.add(btn_Join);
 		pnl_IP.add(btn_idSearch);
 		pnl_IP.add(btn_pwSearch);
+		pnl_IP.add(lb_SH);
+		
+		lb_ID.setHorizontalAlignment(JLabel.RIGHT);
+		lb_PW.setHorizontalAlignment(JLabel.RIGHT);
 
 		btn_Join.setBorderPainted(false);
 		btn_idSearch.setBorderPainted(false);
@@ -102,11 +121,13 @@ public class Login extends JFrame implements ActionListener {
 		btn_pwSearch.setContentAreaFilled(false);
 		
 		this.setTitle("로그인");
-		this.setSize(400, 150);
+		this.setSize(420, 250);
+		this.setLocation(750, 350);
 		this.setDefaultCloseOperation(3);
 		this.add(pnl_IP);
 
 		this.setVisible(true);
+		this.setResizable(false);
 	}
 
 	@Override
@@ -181,7 +202,7 @@ public class Login extends JFrame implements ActionListener {
 			if (i == 0) {
 				for (int k = 0; k < tb_Mem.getRowCount(); k++) {
 					if (Table_model.getValueAt(k, 0).equals(id)) {
-						System.out.println("비밀번호가 틀립니다");
+						JOptionPane.showMessageDialog(null, "비밀번호가 틀립니다.", "비밀번호 오류", JOptionPane.ERROR_MESSAGE);
 						i=3;
 						Table_model.setRowCount(0);
 						break;
@@ -194,7 +215,7 @@ public class Login extends JFrame implements ActionListener {
 			}
 			
 			if (i == 2) {
-				System.out.println("존재하지 않는 아이디 입니다.");
+				JOptionPane.showMessageDialog(null, "존재하지 않는 아이디입니다.", "아이디 오류", JOptionPane.ERROR_MESSAGE);
 				Table_model.setRowCount(0);
 			}
 

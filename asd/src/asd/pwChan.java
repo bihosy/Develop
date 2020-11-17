@@ -12,6 +12,8 @@ import java.io.PrintWriter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +38,9 @@ public class pwChan extends JFrame implements ActionListener {
 	String gr = "Members.txt";// 경로저장
 
 	String l;// 파일 읽어서 문자열 저장
+	
+	JLabel lb_newPW; // 새로운 비밀번호(New Password) 라벨
+	JLabel lb_newPWC; // 새로운 비밀번호 확인(New Password Check) 라벨
 
 	// ----------------파일 리드라이트-----------//
 
@@ -55,17 +60,33 @@ public class pwChan extends JFrame implements ActionListener {
 		pf_newPW = new JPasswordField(10);
 		pf_newPWC = new JPasswordField(10);
 		btn_newPW = new JButton("변경");
-
-		this.setSize(300, 120);
-		this.setLayout(new FlowLayout());
-
+		lb_newPW = new JLabel("새 비밀번호");
+		lb_newPWC = new JLabel("새 비밀번호 확인");
+		
+		this.setTitle("비밀번호 변경");
+		this.setSize(400, 240);
+		this.setLayout(null);
+		
+		lb_newPW.setBounds(50, 30, 100, 25);
+		pf_newPW.setBounds(190, 30, 150, 25);
+		lb_newPWC.setBounds(50, 80, 100, 25);
+		pf_newPWC.setBounds(190, 80, 150, 25);
+		btn_newPW.setBounds(50, 140, 290, 35);
+		
+		lb_newPW.setHorizontalAlignment(JLabel.RIGHT);
+		lb_newPWC.setHorizontalAlignment(JLabel.RIGHT);
+		
+		this.add(lb_newPW);
 		this.add(pf_newPW);
+		this.add(lb_newPWC);
 		this.add(pf_newPWC);
 		this.add(btn_newPW);
 
 		btn_newPW.addActionListener(this);
-
+		
+		this.setLocation(750, 400);
 		this.setVisible(true);
+		this.setResizable(false);
 	}
 
 	@Override
@@ -143,7 +164,7 @@ public class pwChan extends JFrame implements ActionListener {
 		}
 		
 		else{
-			System.out.println("비밀번호가 다릅니다.");
+			JOptionPane.showMessageDialog(null, "비밀번호가 다릅니다. 다시 입력해주세요.", "비밀번호 변경 오류", JOptionPane.ERROR_MESSAGE);
 			Table_model.setRowCount(0);
 		}
 	}
