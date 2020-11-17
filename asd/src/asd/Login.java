@@ -188,12 +188,14 @@ public class Login extends JFrame implements ActionListener{
 						System.out.println("어서오세요 관리자님");
 						i = 1;
 						Table_model.setRowCount(0);
+						new Shop_admin();
 						break;
 					}
 					else{
 						System.out.println("성공적으로 로그인 되었습니다.");
 						i = 1;
 						Table_model.setRowCount(0);
+						new Shop_nomal();
 						break;
 					}
 					

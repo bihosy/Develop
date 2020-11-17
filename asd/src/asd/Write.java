@@ -67,7 +67,8 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 	JPanel pnl_north, pnl_north1, pnl_north2, pnl_middle, pnl_south;
 	JComboBox com_menu;
 	JLabel lb_title, lb_upload1, lb_upload2, lb_upload3, lb_image, lb_price, lb_size, lb_blank, lb_blank2;
-	JButton btn_reload,  btn_finish, btn_preview;
+	JButton btn_reload, btn_preview;
+	static JButton btn_finish;
 	ImageIcon img;
 	JCheckBox cb_sizeS, cb_sizeM, cb_sizeL;
 
@@ -256,6 +257,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 			this.setDefaultCloseOperation(3);
 			setVisible(false);
 			Table_model.setRowCount(0);
+			new Shop_admin();
 
 		}
 	}
