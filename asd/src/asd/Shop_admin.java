@@ -70,20 +70,20 @@ public class Shop_admin extends JFrame implements ActionListener {
 	JPanel pnl_under = new JPanel();
 	
 
-	JPanel[] pnl_arry = new JPanel[8];
-	JPanel[] pnl_arry2 = new JPanel[8];
-	JPanel[] pnl_arry3 = new JPanel[8]; //상품정보
-	JPanel[] pnl_arry4 = new JPanel[8]; //상품정보 내용
+	JPanel[] pnl_arry = new JPanel[9];
+	JPanel[] pnl_arry2 = new JPanel[9];
+	JPanel[] pnl_arry3 = new JPanel[9]; //상품정보
+	JPanel[] pnl_arry4 = new JPanel[9]; //상품정보 내용
 	
-	JLabel[] lb_name = new JLabel[8];
-	JLabel[] lb_size = new JLabel[8];
-	JLabel[] lb_price = new JLabel[8];
-	JLabel[] lb_jumun = new JLabel[8];
-	JLabel[] lb_1day = new JLabel[8];
-	JLabel[] lb_image = new JLabel[8];
-	JLabel[] lb_name_arry = new JLabel[8];
-	JLabel[] lb_size_arry = new JLabel[8];
-	JLabel[] lb_price_arry = new JLabel[8];
+	JLabel[] lb_name = new JLabel[9];
+	JLabel[] lb_size = new JLabel[9];
+	JLabel[] lb_price = new JLabel[9];
+	JLabel[] lb_jumun = new JLabel[9];
+	JLabel[] lb_1day = new JLabel[9];
+	JLabel[] lb_image = new JLabel[9];
+	JLabel[] lb_name_arry = new JLabel[9];
+	JLabel[] lb_size_arry = new JLabel[9];
+	JLabel[] lb_price_arry = new JLabel[9];
 	JLabel lb_top_logo = new JLabel("이미지"); // 팀로고 or 쇼핑몰 로고
 	JLabel lb_top_info1 = new JLabel("아이디 : "); // 가입할때 입력한 아이디
 	JLabel lb_top_info2 = new JLabel("등급 : "); // admin or user

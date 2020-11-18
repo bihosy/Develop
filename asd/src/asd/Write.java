@@ -42,18 +42,35 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 	String header[] = { "상품번호", "사진경로", "상품명", "가격", "사이즈","내용" };
 	String contents[][] = {};
 	String s = "";
-	DefaultTableModel Table_model;
-	JTable tb_Pro;
+	DefaultTableModel Table_model, top_model, pants_model,shoes_model;
+	JTable tb_Pro, tb_top, tb_pants,tb_shoes;
 	// --------DB 테이블 관련 --------//
 
 	// ----------------파일 리드라이트-----------//
 	BufferedReader br = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
 	PrintWriter pw = null;// 버퍼를 이용해서 만들어진 파일 쓰기도구
+	BufferedReader brtop = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
+	PrintWriter pwtop = null;// 버퍼를 이용해서 만들어진 파일 쓰기도구
+	BufferedReader brpants = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
+	PrintWriter pwpants = null;// 버퍼를 이용해서 만들어진 파일 쓰기도구
+	BufferedReader brshoes = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
+	PrintWriter pwshoes = null;// 버퍼를 이용해서 만들어진 파일 쓰기도구
+
+	
 
 	FileReader fr = null;// 파일객체 읽어오기
 	FileWriter fw = null;// 파일객체 쓰기
+	FileReader frtop = null;// 파일객체 읽어오기
+	FileWriter fwtop = null;// 파일객체 쓰기
+	FileReader frpants = null;// 파일객체 읽어오기
+	FileWriter fwpants = null;// 파일객체 쓰기
+	FileReader frshoes = null;// 파일객체 읽어오기
+	FileWriter fwshoes = null;// 파일객체 쓰기
 
 	String gr = "product.txt";// 경로저장
+	String topgr = "top.txt";// 경로저장
+	String pantsgr = "pants.txt";// 경로저장
+	String shoesgr = "shoes.txt";// 경로저장
 	String img_gr = "noimage.png";
 	String size = "";
 
@@ -71,19 +88,40 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 	static JButton btn_finish;
 	ImageIcon img;
 	JCheckBox cb_sizeS, cb_sizeM, cb_sizeL;
-
+	JComboBox cb_pro;
+	String[] proname = {"상의","하의","신발"};
 	@SuppressWarnings("rawtypes")
 
 	public Write() {
 
+		cb_pro = new JComboBox(proname);
+		
+		
 		// --------DB 테이블 관련 --------//
 		Table_model = new DefaultTableModel(contents, header);
+		top_model = new DefaultTableModel(contents, header);
+		pants_model = new DefaultTableModel(contents, header);
+		shoes_model = new DefaultTableModel(contents, header);
+		
+		
 		tb_Pro = new JTable(Table_model);
+		tb_top = new JTable(top_model);
+		tb_pants = new JTable(pants_model);
+		tb_shoes = new JTable(shoes_model);
 		// --------DB 테이블 관련 --------//
 
 		try {
 			fr = new FileReader(gr);
 			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
+			
+			frtop = new FileReader(topgr);
+			brtop = new BufferedReader(frtop);
+			
+			frpants = new FileReader(pantsgr);
+			brpants = new BufferedReader(frpants);
+			
+			frshoes = new FileReader(shoesgr);
+			brshoes = new BufferedReader(frshoes);
 
 			while ((l = br.readLine()) != null) {
 
@@ -100,6 +138,51 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 				idx = Integer.parseInt(str[0]) + 1;
 
 			}
+			while ((l = brtop.readLine()) != null) {
+
+				String[] str = l.split("/");
+
+				System.out.print(str[0] + "/");
+				System.out.print(str[1] + "/");
+				System.out.print(str[2] + "/");
+				System.out.print(str[3] + "/");
+				System.out.print(str[4] + "/");
+				System.out.println(str[5]);
+
+				top_model.addRow(str);
+
+
+			}
+			while ((l = brpants.readLine()) != null) {
+
+				String[] str = l.split("/");
+
+				System.out.print(str[0] + "/");
+				System.out.print(str[1] + "/");
+				System.out.print(str[2] + "/");
+				System.out.print(str[3] + "/");
+				System.out.print(str[4] + "/");
+				System.out.println(str[5]);
+
+				pants_model.addRow(str);
+
+
+			}
+			while ((l = brshoes.readLine()) != null) {
+
+				String[] str = l.split("/");
+
+				System.out.print(str[0] + "/");
+				System.out.print(str[1] + "/");
+				System.out.print(str[2] + "/");
+				System.out.print(str[3] + "/");
+				System.out.print(str[4] + "/");
+				System.out.println(str[5]);
+
+				shoes_model.addRow(str);
+
+
+			}
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -108,7 +191,15 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		} finally {
 			try {
 				fr.close();
+				frtop.close();
+				frpants.close();
+				frshoes.close();
+				
 				br.close();
+				brtop.close();
+				brpants.close();
+				brshoes.close();
+				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -171,6 +262,8 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		pnl_north2.add(cb_sizeM);
 		pnl_north2.add(cb_sizeL);
 		pnl_north2.add(lb_blank2);
+		pnl_north2.add(cb_pro);
+
 		
 
 		lb_image.addMouseListener(this);
@@ -178,6 +271,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		cb_sizeS.addItemListener(this);
 		cb_sizeM.addItemListener(this);
 		cb_sizeL.addItemListener(this);
+	
 
 		pnl_north.add(pnl_north1);
 		pnl_north.add(pnl_north2);
@@ -216,7 +310,145 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 			Pro_str[5] = ta_chi;
 
 			Table_model.addRow(Pro_str);
+			
+			if(cb_pro.getSelectedItem().toString().equals("상의")){
+				
+				top_model.addRow(Pro_str);
+				
+				try {
+					fwtop = new FileWriter(topgr);
+					pwtop = new PrintWriter(fwtop);
 
+					for (int i = 0; i < tb_top.getRowCount(); i++) {
+						for (int j = 0; j < tb_top.getColumnCount(); j++) {
+
+							if (j == tb_top.getColumnCount()-1) {
+								l = top_model.getValueAt(i, j).toString();
+								pwtop.print(l);
+
+							} else {
+								l = tb_top.getValueAt(i, j).toString();
+								pwtop.print(l);
+								pwtop.print("/");
+
+							}
+						}
+						pwtop.println();
+					}
+
+				}
+
+				catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} finally {
+
+					try {
+						fwtop.close();
+						pwtop.close();
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
+				
+			}
+			
+			
+			
+			
+			if(cb_pro.getSelectedItem().toString().equals("하의")){
+				pants_model.addRow(Pro_str);
+				
+				
+				try {
+					fwpants = new FileWriter(pantsgr);
+					pwpants = new PrintWriter(fwpants);
+
+					for (int i = 0; i < tb_pants.getRowCount(); i++) {
+						for (int j = 0; j < tb_pants.getColumnCount(); j++) {
+
+							if (j == tb_pants.getColumnCount()-1) {
+								l = pants_model.getValueAt(i, j).toString();
+								pwpants.print(l);
+
+							} else {
+								l = tb_pants.getValueAt(i, j).toString();
+								pwpants.print(l);
+								pwpants.print("/");
+
+							}
+						}
+						pwpants.println();
+					}
+
+				}
+
+				catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} finally {
+
+					try {
+						fwpants.close();
+						pwpants.close();
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
+				
+			}
+			
+			
+			
+			if(cb_pro.getSelectedItem().toString().equals("신발")){
+				shoes_model.addRow(Pro_str);
+				try {
+					fwshoes = new FileWriter(shoesgr);
+					pwshoes = new PrintWriter(fwshoes);
+
+					for (int i = 0; i < tb_shoes.getRowCount(); i++) {
+						for (int j = 0; j < tb_shoes.getColumnCount(); j++) {
+
+							if (j == tb_shoes.getColumnCount()-1) {
+								l = shoes_model.getValueAt(i, j).toString();
+								pwshoes.print(l);
+
+							} else {
+								l = tb_shoes.getValueAt(i, j).toString();
+								pwshoes.print(l);
+								pwshoes.print("/");
+
+							}
+						}
+						pwshoes.println();
+					}
+
+				}
+
+				catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} finally {
+
+					try {
+						fwshoes.close();
+						pwshoes.close();
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
+				
+			}
+			
+			
+			
+			
+			
+			
+			
 			try {
 				fw = new FileWriter(gr);
 				pw = new PrintWriter(fw);
@@ -253,6 +485,11 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 					e1.printStackTrace();
 				}
 			}
+			
+			
+			
+	
+			
 			JOptionPane.showMessageDialog(null, "상품등록이 완료되었습니다.", "상품등록 완료", JOptionPane.PLAIN_MESSAGE);
 			this.setDefaultCloseOperation(3);
 			setVisible(false);
@@ -283,7 +520,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 			}
 
 			lb_image.setIcon(new ImageIcon(resizeImage));
-
+			
 			repaint();
 			revalidate();
 		}
@@ -312,29 +549,29 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 		if (source == cb_sizeS) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
-				size = size.replace("s,", "");
+				size = size.replace("S(90),", "");
 				System.out.println(size);
 
 			} else {
-				size = size + "s,";
+				size = size + "S(90),";
 				System.out.println(size);
 			}
 		}
 		if (source == cb_sizeM) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
-				size = size.replaceAll("m,", "");
+				size = size.replace("M(95),", "");
 				System.out.println(size);
 			} else {
-				size = size + "m,";
+				size = size + "M(95),";
 				System.out.println(size);
 			}
 		}
 		if (source == cb_sizeL) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
-				size = size.replace("l,", "");
+				size = size.replace("L(100)", "");
 				System.out.println(size);
 			} else {
-				size = size + "l,";
+				size = size + "L(100)";
 				System.out.println(size);
 			}
 		}

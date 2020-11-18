@@ -56,6 +56,7 @@ public class idSearch extends JFrame implements ActionListener {
 	String cbData[] = {"010", "011", "012", "015", "016", "017", "018", "019"}; // 휴대폰 앞자리 배열
 
 	JButton btn_idS; // id찾기
+	JButton btn_back; // 뒤로가기
 
 	public idSearch() {
 
@@ -81,8 +82,11 @@ public class idSearch extends JFrame implements ActionListener {
 		lb_M2 = new JLabel("-");
 
 		btn_idS = new JButton("찾기");
+		btn_back = new JButton("뒤로가기");
 		btn_idS.addActionListener(this);
-		btn_idS.setBounds(35, 190, 275, 35);
+		btn_back.addActionListener(this);
+		btn_idS.setBounds(35, 190, 130, 35);
+		btn_back.setBounds(180, 190, 130, 35);
 		
 		lb_Name.setBounds(60, 20, 30, 25);
 		lb_Phone.setBounds(30, 70, 60, 25);
@@ -107,6 +111,7 @@ public class idSearch extends JFrame implements ActionListener {
 		this.add(tf_Phone2);
 		this.add(tf_Phone3);
 		this.add(btn_idS);
+		this.add(btn_back);
 		this.add(lb_M);
 		this.add(lb_M2);
 		
@@ -118,49 +123,53 @@ public class idSearch extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int i = 0;
-
-		try {
-			fr = new FileReader(gr);
-			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
-
-			while ((l = br.readLine()) != null) {
-
-				String[] str = l.split("/");
-
-				Table_model.addRow(str);
-
-			}
-
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} finally {
+		if(e.getSource() == btn_idS){
 			try {
-				fr.close();
-				br.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				fr = new FileReader(gr);
+				br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
+	
+				while ((l = br.readLine()) != null) {
+	
+					String[] str = l.split("/");
+	
+					Table_model.addRow(str);
+	
+				}
+	
+			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} finally {
+				try {
+					fr.close();
+					br.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-		}
-
-		for (int k = 0; k < tb_Mem.getRowCount(); k++) {
-			String name = tf_Name.getText();
-			String phone = cb_Phone1.getSelectedItem() + "-" + tf_Phone2.getText() + "-" + tf_Phone3.getText();
-			if (Table_model.getValueAt(k, 2).equals(name) && Table_model.getValueAt(k, 4).equals(phone)) {
-
-				System.out.println(Table_model.getValueAt(k, 0));
-				i = 1;
-				Table_model.setRowCount(0);
-				break;
-
+	
+			for (int k = 0; k < tb_Mem.getRowCount(); k++) {
+				String name = tf_Name.getText();
+				String phone = cb_Phone1.getSelectedItem() + "-" + tf_Phone2.getText() + "-" + tf_Phone3.getText();
+				if (Table_model.getValueAt(k, 2).equals(name) && Table_model.getValueAt(k, 4).equals(phone)) {
+	
+					System.out.println(Table_model.getValueAt(k, 0));
+					i = 1;
+					Table_model.setRowCount(0);
+					break;
+	
+				}
 			}
+			if(i==0){
+				JOptionPane.showMessageDialog(null, "해당 정보로 가입한 계정이 존재하지 않습니다.", "계정 찾기 오류", JOptionPane.ERROR_MESSAGE);
+			}
+	
 		}
-		if(i==0){
-			JOptionPane.showMessageDialog(null, "해당 정보로 가입한 계정이 존재하지 않습니다.", "계정 찾기 오류", JOptionPane.ERROR_MESSAGE);
+		if(e.getSource() == btn_back){
+			this.setVisible(false);
 		}
-
 	}
 
 	public static void main(String[] args) {
