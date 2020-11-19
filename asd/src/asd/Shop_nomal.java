@@ -104,7 +104,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 	};
 	JPanel pnl_image = new JPanel();
 	JPanel pnl_info = new JPanel();
-
+	JButton buybuy = new JButton("구매하기");
 	JPanel[] pnl_arry = new JPanel[9];
 
 	JPanel[] pnl_arry2 = new JPanel[9];
@@ -678,7 +678,8 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 			JPanel pnl_Basket = new JPanel(); // this에 붙어있는패널
 			JPanel pnl_Basket_menu = new JPanel(); // pnl Center에 붙어있는 패널
 			JPanel pnl_Basket_main = new JPanel();// menu에 Center로 붙어있는 패널
-
+			JPanel pnl_Basket_buy = new JPanel();
+			pnl_Basket_buy.setBackground(Color.gray);
 			JScrollPane sp_Basket_pnl;// menu에 Center로 붙어있는 패널
 
 			JPanel[] pnl_Basket_shopbasket = new JPanel[bas_count]; // 장바구니 패널
@@ -698,8 +699,10 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 			JLabel[] lb_Basket_price_title = new JLabel[bas_count];
 
 			JLabel[] lb_Basket_name = new JLabel[bas_count];
+			JLabel lb_Basket_gunprice = new JLabel();
 			JLabel[] lb_Basket_size = new JLabel[bas_count];
 			JLabel[] lb_Basket_price = new JLabel[bas_count];
+			
 
 			int Bas_i;
 
@@ -791,15 +794,24 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 			sp_pnl = new JScrollPane(pnl_Basket_main);
 
 			// this.add(pnl_Basket);
+			
 
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
+			lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
+			pnl_Basket_buy.add(lb_Basket_gunprice);
+			pnl_Basket_buy.add(buybuy);
+			pnl_menu.add(pnl_Basket_buy, "South");
+			buybuy.addActionListener(this);
 
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 
 			revalidate();
 			repaint();
 
+		}
+		if(e.getSource()==buybuy){
+			System.out.println("3");
 		}
 
 	}
@@ -929,6 +941,9 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
 					pro_show.Image[pro_show.cc]=resizeImage3;
+					
+					String get_price = this.lb_price_arry[i].getText();
+					pro_show.price=pro_show.price+Integer.parseInt(get_price);
 
 					str = top_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -966,6 +981,9 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
 					pro_show.Image[pro_show.cc]=resizeImage3;
+					
+					String get_price = this.lb_price_arry[i].getText();
+					pro_show.price=pro_show.price+Integer.parseInt(get_price);
 
 					str = pants_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1002,6 +1020,9 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
 					pro_show.Image[pro_show.cc]=resizeImage3;
+					
+					String get_price = this.lb_price_arry[i].getText();
+					pro_show.price=pro_show.price+Integer.parseInt(get_price);
 
 					str = shoes_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1038,10 +1059,14 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
 					pro_show.Image[pro_show.cc]=resizeImage3;
+					
+					String get_price = this.lb_price_arry[i].getText();
+					pro_show.price=pro_show.price+Integer.parseInt(get_price);
 
 					str = Table_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
 					pro_show.ta_under.setText(str);
+					
 
 				}
 
@@ -1067,12 +1092,16 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 
 					String set_name = this.lb_name_arry[i].getText();
 					String set_price = this.lb_price_arry[i].getText() + " 원";
+					
 
 					pro_show.lb_name2.setText(set_name);
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
 					pro_show.Image[pro_show.cc]=resizeImage3;
 					
+					String get_price = this.lb_price_arry[i].getText();
+					
+					pro_show.price=pro_show.price+Integer.parseInt(get_price);
 
 					str = Table_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");

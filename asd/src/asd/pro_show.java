@@ -22,6 +22,7 @@ public class pro_show extends JFrame implements ActionListener {
 	JLabel lb_name,lb_price,lb_size;
 	static JLabel lb_name2, lb_price2, lb_size2, lb_color,lb_img;
 	static String[][] String_size = new String [9][Shop_nomal.sizesize];
+	static int price=0;
 	
 	static int cc =0;
 	static String[] bas_name = new String[10];
@@ -120,7 +121,7 @@ public class pro_show extends JFrame implements ActionListener {
 			bas_name[cc]=lb_name2.getText();
 			bas_price[cc]=lb_price2.getText();
 			bas_size[cc]=cb_size.getSelectedItem().toString();
-			//System.out.println(Image[cc]);
+			System.out.println(price);
 			++cc;
 			this.setDefaultCloseOperation(3);
 			this.setVisible(false);
