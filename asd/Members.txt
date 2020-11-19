@@ -1,6 +1,2 @@
-d//d/0/dddd/d/false
-asdf/asdf/asdf/0/010-561-56/f f/false
-asd/asd/asd/0/010-4156-456/561 564/false
-s/s/s/0/010-f-f/f f/true
-bihosy/sd6044sd/윤수영/0/010-6385-6044/1 1/false
-asdrf55/as6044as/윤수영/0/010-6385-6044/부산시 남구 대연동/false
+goodthe1/123/전성훈/0/1996-11-11/010-2387-4510/ㅁ ㅁ/true
+asd/sf/asd/0/2000-02-01/010-1234-1234/a a/false

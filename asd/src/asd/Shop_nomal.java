@@ -233,7 +233,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 		Image Image3 = resizeImage2.getScaledInstance(300, 100, Image.SCALE_SMOOTH);
 		ImageIcon Image4 = new ImageIcon(Image3);
 		lb_Image2 = new JLabel(Image4);
-		lb_WC = new JLabel("OOO님 환영합니다");
+		lb_WC = new JLabel(Login.name+"님 환영합니다");
 
 		this.setSize(1000, 1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
