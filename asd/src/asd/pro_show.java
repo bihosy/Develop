@@ -1,6 +1,9 @@
 package asd;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -9,16 +12,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
+import javax.xml.stream.util.EventReaderDelegate;
 
-public class pro_show extends JFrame {
+public class pro_show extends JFrame implements ActionListener {
+	
+	static Image[] Image = new Image[10];
 	
 	
 	JLabel lb_name,lb_price,lb_size;
 	static JLabel lb_name2, lb_price2, lb_size2, lb_color,lb_img;
 	static String[][] String_size = new String [9][Shop_nomal.sizesize];
 	
-	
-	
+	static int cc =0;
+	static String[] bas_name = new String[10];
+	static String[] bas_price = new String[10];
+	static String[] bas_size = new String[10];
 	JButton btn_baguni; // 장바구니 버튼
 	JButton btn_buy; // 구매 버튼
 	static JTextArea ta_under; // 상품설명 텍스트에어리어
@@ -35,6 +43,9 @@ public class pro_show extends JFrame {
 	
 	public pro_show(){
 		
+		
+		
+		
 		lb_name = new JLabel("상품명");
 		lb_price = new JLabel("가  격");
 		lb_size = new JLabel("사이즈");
@@ -43,6 +54,7 @@ public class pro_show extends JFrame {
 		lb_price2 = new JLabel();
 		lb_img = new JLabel();
 		btn_baguni = new JButton("장바구니");
+		btn_baguni.addActionListener(this);
 		btn_buy = new JButton("구매");
 		ta_under = new JTextArea();
 		ta_under.setEditable(false);;
@@ -100,6 +112,22 @@ public class pro_show extends JFrame {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new pro_show();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==btn_baguni){
+			bas_name[cc]=lb_name2.getText();
+			bas_price[cc]=lb_price2.getText();
+			bas_size[cc]=cb_size.getSelectedItem().toString();
+			//System.out.println(Image[cc]);
+			++cc;
+			this.setDefaultCloseOperation(3);
+			this.setVisible(false);
+			//System.out.println(Shop_nomal.bas_count);
+			
+		}
+		
 	}
 
 }

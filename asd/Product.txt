@@ -1,5 +1,9 @@
-0/noimage.png/test/test/test/test<br>test<br>test
-1/C:\Users\user\Documents\네이트온 받은 파일\2020-10-27-18-06-05-624.jpg/돼지고기/3000/s,/마싯다
-2/C:\Users\user\Documents\네이트온 받은 파일\2020-10-27-18-06-05-624.jpg/전성훈허벅지살/1000/l,s,/마슨있네
-3/C:\Users\user\Documents\네이트온 받은 파일\2020-10-27-18-06-05-624.jpg/샌드백/10000/m,/ㅇㅇㅇ
-4/C:\Users\user\Documents\네이트온 받은 파일\20201029_142730.jpg/d/d/m,/d
+0/noimage.png/test/test/s(90),M(95),L(100)/test<br>test<br>test
+1/C:\Users\user\Documents\네이트온 받은 파일\2020-10-27-18-06-05-624.jpg/돼지고기/3000/M(95),L(100)/마싯다
+2/C:\Users\user\Documents\네이트온 받은 파일\2020-10-27-18-06-05-624.jpg/전성훈허벅지살/1000/s(90),M(95),L(100)/마슨있네
+3/C:\Users\user\Documents\네이트온 받은 파일\2020-10-27-18-06-05-624.jpg/샌드백/10000/s(90),M(95),L(100)/ㅇㅇㅇ
+4/noimage.png/g/g/M(95),L(100)S(90),/h
+5/C:\Users\user\Documents\네이트온 받은 파일\20201105_155224_812.jpg/hhjj/jjj/S(90),/jfh
+6/noimage.png/dd/dd/M(95),/af
+7/noimage.png/12435/544/L(100)/savx
+8/noimage.png/wqewre/csad/M(95),/qd12d
