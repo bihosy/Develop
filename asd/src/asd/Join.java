@@ -134,7 +134,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 			};
 			
 		this.add(P);
-		this.setLocation(700, 100);
+		setLocationRelativeTo(null);
 		Table_model = new DefaultTableModel(contents, header);
 		tb_Mem = new JTable(Table_model);
 

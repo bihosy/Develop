@@ -207,7 +207,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		}
 
 		this.setSize(1000, 800);
-
+		setLocationRelativeTo(null);
 		fd_title = new JTextField(25);
 		fd_price = new JTextField(20);
 		// fd_size = new JTextField(28);

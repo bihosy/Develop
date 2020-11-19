@@ -98,7 +98,7 @@ public class pwChan extends JFrame implements ActionListener {
 
 		btn_newPW.addActionListener(this);
 
-		this.setLocation(750, 400);
+		setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(false);
 	}

@@ -212,8 +212,12 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 				if (Table_model.getValueAt(k, 0).equals(id) && Table_model.getValueAt(k, 1).equals(pw)) {
 					if (Table_model.getValueAt(k, 7).equals("true")) {
 						System.out.println("어서오세요 관리자님");
+						name=Table_model.getValueAt(k, 2).toString();
 						i = 1;
 						Table_model.setRowCount(0);
+						this.setDefaultCloseOperation(3);
+						this.setVisible(false);
+						new Shop_admin();
 						break;
 					} else {
 						System.out.println("성공적으로 로그인 되었습니다.");

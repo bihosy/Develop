@@ -118,7 +118,7 @@ public class pwSearch extends JFrame implements ActionListener {
 		this.add(P);
 		this.setTitle("비밀번호 찾기");
 		this.setSize(350, 350);
-		this.setLocation(800, 350);
+		setLocationRelativeTo(null);
 		
 		tf_ID = new JTextField();
 		tf_Name = new JTextField();

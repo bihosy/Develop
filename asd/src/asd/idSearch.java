@@ -96,7 +96,7 @@ public class idSearch extends JFrame implements ActionListener {
 
 		this.setTitle("아이디 찾기");
 		this.setSize(350, 300);
-		this.setLocation(800, 350);
+		setLocationRelativeTo(null);
 
 		tf_Name = new JTextField();
 		cb_Phone1 = new JComboBox(cbData);

@@ -21,7 +21,7 @@ public class pro_show extends JFrame implements ActionListener {
 	
 	JLabel lb_name,lb_price,lb_size;
 	static JLabel lb_name2, lb_price2, lb_size2, lb_color,lb_img;
-	static String[][] String_size = new String [9][Shop_nomal.sizesize];
+	static String[][] String_size = new String [9][3];
 	static int price=0;
 	
 	static int cc =0;
@@ -91,6 +91,8 @@ public class pro_show extends JFrame implements ActionListener {
 		lb_price2.setHorizontalAlignment(JLabel.RIGHT);
 		
 		this.setSize(600, 600);
+		
+		setLocationRelativeTo(null);
 		this.add(lb_name);
 		this.add(lb_price);
 		this.add(lb_size);
