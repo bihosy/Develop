@@ -134,7 +134,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 			};
 			
 		this.add(P);
-		setLocationRelativeTo(null);
+		
 		Table_model = new DefaultTableModel(contents, header);
 		tb_Mem = new JTable(Table_model);
 
@@ -165,7 +165,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 		cb_Phone1 = new JComboBox(cbData);
 		pnl_YMD = new JPanel();
 		
-
+		
 		try {
 			fr = new FileReader(gr);
 			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
@@ -289,6 +289,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 		this.setTitle("회원가입");
 		this.setSize(480, 900);
 		this.setVisible(true);
+		setLocationRelativeTo(null);
 		this.setResizable(false);
 		
 	}

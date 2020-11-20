@@ -87,9 +87,9 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		
 		this.setTitle("·Î±×ÀÎ");
 		this.setSize(750, 470);
-		setLocationRelativeTo(null);
+		
 		this.setDefaultCloseOperation(3);
-
+		setLocationRelativeTo(null);
 		lb_ID = new JLabel("ID");
 		lb_PW = new JLabel("PW");
 		lb_SH = new JLabel("/");

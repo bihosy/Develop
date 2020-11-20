@@ -123,8 +123,8 @@ public class pro_show extends JFrame implements ActionListener {
 			bas_name[cc]=lb_name2.getText();
 			bas_price[cc]=lb_price2.getText();
 			bas_size[cc]=cb_size.getSelectedItem().toString();
-			System.out.println(price);
-			++cc;
+			cc++;
+			System.out.println(cc);
 			this.setDefaultCloseOperation(3);
 			this.setVisible(false);
 			//System.out.println(Shop_nomal.bas_count);
