@@ -1,3 +1,1 @@
 0/noimage.png/test/test/s(90),M(95),L(100)/test<br>test<br>test
-10/C:\Users\user\Documents\네이트온 받은 파일\2020-10-27-18-06-05-624.jpg/g/g/S(90),L(100)/g
-6/noimage.png/dd/dd/M(95),/af

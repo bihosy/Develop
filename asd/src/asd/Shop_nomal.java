@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -26,6 +28,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,8 +36,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Shop_nomal extends JFrame implements ActionListener, MouseListener {
+public class Shop_nomal extends JFrame implements ActionListener, MouseListener, ItemListener {
 
+	
+	JPanel pnl_Basket = new JPanel(); // this에 붙어있는패널
+	JPanel pnl_Basket_menu = new JPanel(); // pnl Center에 붙어있는 패널
+	JPanel pnl_Basket_main = new JPanel();// menu에 Center로 붙어있는 패널
+	JPanel pnl_Basket_buy = new JPanel();
+	JPanel[] pnl_Basket_shopbasket = new JPanel[99];
 	
 
 	// --------DB 테이블 관련 --------//
@@ -105,7 +114,9 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 	JPanel pnl_image = new JPanel();
 	JPanel pnl_info = new JPanel();
 	JButton buybuy = new JButton("구매하기");
+	JButton deldel = new JButton("삭제하기");
 	JPanel[] pnl_arry = new JPanel[9];
+	JCheckBox[] cb_del = new JCheckBox[9];
 
 	JPanel[] pnl_arry2 = new JPanel[9];
 	JPanel[] pnl_arry3 = new JPanel[9]; // 상품정보
@@ -675,14 +686,11 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 			String[] bas_size = pro_show.bas_size;
 			// 생성현재는 2로
 			// 주었음 장바구니에 넣은 상품의갯수를 받아오면됨
-			JPanel pnl_Basket = new JPanel(); // this에 붙어있는패널
-			JPanel pnl_Basket_menu = new JPanel(); // pnl Center에 붙어있는 패널
-			JPanel pnl_Basket_main = new JPanel();// menu에 Center로 붙어있는 패널
-			JPanel pnl_Basket_buy = new JPanel();
+			
 			pnl_Basket_buy.setBackground(Color.gray);
 			JScrollPane sp_Basket_pnl;// menu에 Center로 붙어있는 패널
 
-			JPanel[] pnl_Basket_shopbasket = new JPanel[bas_count]; // 장바구니 패널
+			 // 장바구니 패널
 																	// bas_count만큼
 																	// 생성
 			JLabel[] lb_Basket_shopbasket_image = new JLabel[bas_count]; // 장바구니
@@ -702,7 +710,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 			JLabel lb_Basket_gunprice = new JLabel();
 			JLabel[] lb_Basket_size = new JLabel[bas_count];
 			JLabel[] lb_Basket_price = new JLabel[bas_count];
-			
+			JButton[] btn_del = new JButton[bas_count];
 
 			int Bas_i;
 
@@ -730,6 +738,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 				lb_Basket_name[Bas_i] = new JLabel(bas_name[Bas_i]);
 				lb_Basket_size[Bas_i] = new JLabel(bas_size[Bas_i]);
 				lb_Basket_price[Bas_i] = new JLabel(bas_price[Bas_i]);
+				btn_del[Bas_i] = new JButton("삭제");
 				lb_Basket_shopbasket_image[Bas_i] = new JLabel();// "이미지자리"
 																		// 라는 글자
 																		// 삭제후
@@ -774,12 +783,18 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 				lb_Basket_size[Bas_i].setFont(font);
 				lb_Basket_price[Bas_i].setFont(font);
 
+				cb_del[Bas_i]= new JCheckBox();
+				cb_del[Bas_i].addActionListener(this);
+				
+				pnl_Basket_product_description[Bas_i].add(cb_del[Bas_i]);
 				pnl_Basket_shopbasket[Bas_i].add(lb_Basket_shopbasket_image[Bas_i]);
 				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_title[Bas_i]);
 				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_description[Bas_i]);
-
+				
+				
 				lb_Basket_shopbasket_image[Bas_i].setBounds(0,-100, 250, 400);
 				pnl_Basket_product_title[Bas_i].setBounds(200, 30, 100, 200);
+				
 				pnl_Basket_product_title[Bas_i].setBackground(Color.WHITE);
 				pnl_Basket_product_description[Bas_i].setBounds(300, 30, 200, 200);
 				pnl_Basket_product_description[Bas_i].setBackground(Color.WHITE);
@@ -801,8 +816,10 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 			lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
 			pnl_Basket_buy.add(lb_Basket_gunprice);
 			pnl_Basket_buy.add(buybuy);
+			pnl_Basket_buy.add(deldel);
 			pnl_menu.add(pnl_Basket_buy, "South");
 			buybuy.addActionListener(this);
+			deldel.addActionListener(this);
 
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 
@@ -813,6 +830,19 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 		if(e.getSource()==buybuy){
 			System.out.println("3");
 		}
+		if(e.getSource()==deldel){
+			pnl_Basket_shopbasket[0].removeAll();
+			
+			
+			
+			
+			
+			
+			revalidate();
+			repaint();
+			
+		}
+		
 
 	}
 
@@ -1127,6 +1157,14 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if(e.getStateChange()==ItemEvent.SELECTED){
+			
+		}
+		
 	}
 
 }

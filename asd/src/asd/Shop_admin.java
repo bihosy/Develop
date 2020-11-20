@@ -32,10 +32,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.TabExpander;
 
 public class Shop_admin extends JFrame implements ActionListener, MouseListener {
 
-	
+	JButton btn_del = new JButton("삭제");
 
 	// --------DB 테이블 관련 --------//
 
@@ -85,6 +86,8 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 	Dimension pnlsize = new Dimension();
 
 	int py;
+	int pronum = 0;
+	int seltbnum = 0;
 
 	int idx = 0;
 	// ----------------파일 리드라이트-----------//
@@ -127,11 +130,11 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 	JLabel lb_top_setinfo1 = new JLabel(" rozen"); // 임시로 rozen넣어놈 작업할땐 지우고 받아온
 													// 아이디를 여기 라벨에 붙이면됨
 	JLabel lb_top_setinfo2 = new JLabel("admin");// 임시로 admin넣어놈 작업할땐 지우고 받아온
-	JButton btn_write = new JButton("글쓰기");			// 아이디를 여기 라벨에 붙이면됨
+	JButton btn_write = new JButton("글쓰기"); // 아이디를 여기 라벨에 붙이면됨
 	JLabel lb_Image2; // 로고 들어갈 상단 라벨
 	JLabel lb_WC; // 상단 우측 라벨(WelCome!)
 
-	String[] str_btn_name = { "상의", "하의", "신발", "장바구니" };
+	String[] str_btn_name = { "상의", "하의", "신발", "글 관리" };
 	int i;
 	int j;
 	int k;
@@ -165,6 +168,8 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		tb_pants = new JTable(pants_model);
 		tb_shoes = new JTable(shoes_model);
 		// --------DB 테이블 관련 --------//
+
+		btn_del.addActionListener(this);
 
 		try {
 			fr = new FileReader(gr);
@@ -234,7 +239,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		Image Image3 = resizeImage2.getScaledInstance(300, 100, Image.SCALE_SMOOTH);
 		ImageIcon Image4 = new ImageIcon(Image3);
 		lb_Image2 = new JLabel(Image4);
-		lb_WC = new JLabel("어서오세요 "+ Login.name+"님 관리자 계정입니다.");
+		lb_WC = new JLabel("어서오세요 " + Login.name + "님 관리자 계정입니다.");
 
 		this.setSize(1000, 1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -381,8 +386,8 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
-		if(e.getSource()==btn_write){
+
+		if (e.getSource() == btn_write) {
 			new Write();
 			this.setDefaultCloseOperation(3);
 			this.setVisible(false);
@@ -479,6 +484,8 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 
 			revalidate();
 			repaint();
@@ -573,6 +580,8 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 			revalidate();
 			repaint();
 		}
@@ -668,6 +677,8 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 			revalidate();
@@ -675,158 +686,270 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		else if (e.getSource() == btn_menu[3]) {
-
-			// 장바구니 변수 //
-			int bas_count = pro_show.cc; // bas_count 숫자에 따라 장바구니에 만들어지는 갯수가 달라짐
-											// 2이면 장바구니에 패널 2개
-			String[] bas_name = pro_show.bas_name;
-			String[] bas_price = pro_show.bas_price;
-			String[] bas_size = pro_show.bas_size;
-			// 생성현재는 2로
-			// 주었음 장바구니에 넣은 상품의갯수를 받아오면됨
-			JPanel pnl_Basket = new JPanel(); // this에 붙어있는패널
-			JPanel pnl_Basket_menu = new JPanel(); // pnl Center에 붙어있는 패널
-			JPanel pnl_Basket_main = new JPanel();// menu에 Center로 붙어있는 패널
-			JPanel pnl_Basket_buy = new JPanel();
-			pnl_Basket_buy.setBackground(Color.gray);
-			JScrollPane sp_Basket_pnl;// menu에 Center로 붙어있는 패널
-
-			JPanel[] pnl_Basket_shopbasket = new JPanel[bas_count]; // 장바구니 패널
-																	// bas_count만큼
-																	// 생성
-			JLabel[] lb_Basket_shopbasket_image = new JLabel[bas_count]; // 장바구니
-																			// 이미지bas_count만큼
-																			// 생성
-
-			JPanel[] pnl_Basket_product_title = new JPanel[bas_count]; // 상품정보
-			JPanel[] pnl_Basket_product_description = new JPanel[bas_count]; // 상품
-																				// 정보
-																				// 내용
-
-			JLabel[] lb_Basket_name_title = new JLabel[bas_count];
-			JLabel[] lb_Basket_size_title = new JLabel[bas_count];
-			JLabel[] lb_Basket_price_title = new JLabel[bas_count];
-
-			JLabel[] lb_Basket_name = new JLabel[bas_count];
-			JLabel lb_Basket_gunprice = new JLabel();
-			JLabel[] lb_Basket_size = new JLabel[bas_count];
-			JLabel[] lb_Basket_price = new JLabel[bas_count];
-			
-
-			int Bas_i;
-
-			pnl_Basket_main.setBackground(Color.WHITE);
-
-			// sp_pnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-			pnl_Basket.setLayout(new BorderLayout());
-			pnl_Basket_menu.setLayout(new BorderLayout());
-
-			pnl_Basket_main.setLayout(null); // 패널의
-
-			int y = 100; // pnl_Basket_shopbasket[i]의 패널의 y값을 증가시켜주기위한 초기값
-			BufferedImage[] img = null;
-			// 장바구니 변수
-
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
-			
+			tb_Pro.addMouseListener(this);
+			JPanel pnl_prodb = new JPanel(new GridLayout(0, 1));
+			JLabel[] lb_name = new JLabel[4];
 
-			for (Bas_i = 0; Bas_i < bas_count; Bas_i++) { // bas_count 장바구니에 넣은
-															// 상품의 갯수만큼 패널만듬
-				pnl_Basket_shopbasket[Bas_i] = new JPanel();
-				lb_Basket_name[Bas_i] = new JLabel(bas_name[Bas_i]);
-				lb_Basket_size[Bas_i] = new JLabel(bas_size[Bas_i]);
-				lb_Basket_price[Bas_i] = new JLabel(bas_price[Bas_i]);
-				lb_Basket_shopbasket_image[Bas_i] = new JLabel();// "이미지자리"
-																		// 라는 글자
-																		// 삭제후
-				// 이미지 넣으면됨
-				
-				lb_Basket_shopbasket_image[Bas_i].setIcon(new ImageIcon(pro_show.Image[Bas_i]));
-				pnl_Basket_product_title[Bas_i] = new JPanel();
-				pnl_Basket_product_description[Bas_i] = new JPanel();
+			lb_name[0] = new JLabel("전체항목");
+			lb_name[1] = new JLabel("상의");
+			lb_name[2] = new JLabel("하의");
+			lb_name[3] = new JLabel("신발");
 
-				pnl_Basket_main.add(pnl_Basket_shopbasket[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].setBounds(100, y, 800, 300); // 나중에
-																			// i값이
-																			// 증가할대마다
-																			// Y값을
-				// +100정도 주면서
-				pnl_Basket_shopbasket[Bas_i].setBackground(Color.WHITE);
-				y = y + 300; // 패널이 생성될때마다 이전 pnl_Basket_shopbasket[i]의y값에
-								// +100만큼 밑에 생성
-				pnl_Basket_shopbasket[Bas_i].setLayout(null);
+			JScrollPane sp_prodb = new JScrollPane(tb_Pro);
+			JScrollPane sp_topdb = new JScrollPane(tb_top);
+			JScrollPane sp_pantsdb = new JScrollPane(tb_pants);
+			JScrollPane sp_shoesdb = new JScrollPane(tb_shoes);
 
-				pnl_Basket_product_title[Bas_i]
-						.setLayout(new BoxLayout(pnl_Basket_product_title[Bas_i], BoxLayout.Y_AXIS));
-				pnl_Basket_product_description[Bas_i]
-						.setLayout(new BoxLayout(pnl_Basket_product_description[Bas_i], BoxLayout.Y_AXIS));
-
-				lb_Basket_name_title[Bas_i] = new JLabel("상품명 : ");
-				lb_Basket_size_title[Bas_i] = new JLabel("사이즈 : ");
-				lb_Basket_price_title[Bas_i] = new JLabel("가격 : ");
-
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_name_title[Bas_i]);
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_size_title[Bas_i]);
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_price_title[Bas_i]);
-				Font font = new Font("", Font.BOLD, 20);
-				lb_Basket_name_title[Bas_i].setFont(font);
-				lb_Basket_size_title[Bas_i].setFont(font);
-				lb_Basket_price_title[Bas_i].setFont(font);
-
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_name[Bas_i]);
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_size[Bas_i]);
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_price[Bas_i]);
-				lb_Basket_name[Bas_i].setFont(font);
-				lb_Basket_size[Bas_i].setFont(font);
-				lb_Basket_price[Bas_i].setFont(font);
-
-				pnl_Basket_shopbasket[Bas_i].add(lb_Basket_shopbasket_image[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_title[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_description[Bas_i]);
-
-				lb_Basket_shopbasket_image[Bas_i].setBounds(0,-100, 250, 400);
-				pnl_Basket_product_title[Bas_i].setBounds(200, 30, 100, 200);
-				pnl_Basket_product_title[Bas_i].setBackground(Color.WHITE);
-				pnl_Basket_product_description[Bas_i].setBounds(300, 30, 200, 200);
-				pnl_Basket_product_description[Bas_i].setBackground(Color.WHITE);
-
-			}
-			int py=0;
-			py = 100+(300 * bas_count);
-
-			pnl_Basket.add(pnl_Basket_menu, "Center");
-			pnl_Basket_main.setPreferredSize(new Dimension(900, py));
-
-			sp_pnl = new JScrollPane(pnl_Basket_main);
-
-			// this.add(pnl_Basket);
-			
-
-			pnl_menu.add(sp_pnl, "Center");
+			pnl_prodb.add(lb_name[0]);
+			pnl_prodb.add(sp_prodb);
+			pnl_prodb.add(lb_name[1]);
+			pnl_prodb.add(sp_topdb);
+			pnl_prodb.add(lb_name[2]);
+			pnl_prodb.add(sp_pantsdb);
+			pnl_prodb.add(lb_name[3]);
+			pnl_prodb.add(sp_shoesdb);
+			pnl_menu.add(pnl_prodb);
 			pnl_menu.add(pnl_btn, "North");
-			lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
-			pnl_Basket_buy.add(lb_Basket_gunprice);
-			pnl_Basket_buy.add(buybuy);
-			pnl_menu.add(pnl_Basket_buy, "South");
-			buybuy.addActionListener(this);
-
-			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
-
+			pnl_under.removeAll();
+			pnl_under.add(btn_del);
 			revalidate();
 			repaint();
 
 		}
-		if(e.getSource()==buybuy){
+		if (e.getSource() == buybuy) {
 			System.out.println("3");
+		}
+		if (e.getSource() == btn_del) {
+			// System.out.println(seltbnum);
+			Table_model.removeRow(seltbnum);
+
+			while (true) {
+				int i=0;
+				i++;
+				if (Integer.parseInt((String) top_model.getValueAt(i, 0)) == pronum) {
+					top_model.removeRow(i);
+					break;
+				}
+				else if (Integer.parseInt((String) pants_model.getValueAt(i, 0)) == pronum) {
+					pants_model.removeRow(i);
+					break;
+				}
+				if (Integer.parseInt((String) shoes_model.getValueAt(i, 0)) == pronum) {
+					shoes_model.removeRow(i);
+					break;
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+				
+				try {
+					fwtop = new FileWriter(topgr);
+					pwtop = new PrintWriter(fwtop);
+
+					for (int i = 0; i < tb_top.getRowCount(); i++) {
+						for (int j = 0; j < tb_top.getColumnCount(); j++) {
+
+							if (j == tb_top.getColumnCount()-1) {
+								l = top_model.getValueAt(i, j).toString();
+								pwtop.print(l);
+
+							} else {
+								l = tb_top.getValueAt(i, j).toString();
+								pwtop.print(l);
+								pwtop.print("/");
+
+							}
+						}
+						pwtop.println();
+					}
+
+				}
+
+				catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} finally {
+
+					try {
+						fwtop.close();
+						pwtop.close();
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
+				
+			
+			
+			
+			
+			
+
+				
+				try {
+					fwpants = new FileWriter(pantsgr);
+					pwpants = new PrintWriter(fwpants);
+
+					for (int i = 0; i < tb_pants.getRowCount(); i++) {
+						for (int j = 0; j < tb_pants.getColumnCount(); j++) {
+
+							if (j == tb_pants.getColumnCount()-1) {
+								l = pants_model.getValueAt(i, j).toString();
+								pwpants.print(l);
+
+							} else {
+								l = tb_pants.getValueAt(i, j).toString();
+								pwpants.print(l);
+								pwpants.print("/");
+
+							}
+						}
+						pwpants.println();
+					}
+
+				}
+
+				catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} finally {
+
+					try {
+						fwpants.close();
+						pwpants.close();
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
+				
+			
+			
+			
+			
+
+				try {
+					fwshoes = new FileWriter(shoesgr);
+					pwshoes = new PrintWriter(fwshoes);
+
+					for (int i = 0; i < tb_shoes.getRowCount(); i++) {
+						for (int j = 0; j < tb_shoes.getColumnCount(); j++) {
+
+							if (j == tb_shoes.getColumnCount()-1) {
+								l = shoes_model.getValueAt(i, j).toString();
+								pwshoes.print(l);
+
+							} else {
+								l = tb_shoes.getValueAt(i, j).toString();
+								pwshoes.print(l);
+								pwshoes.print("/");
+
+							}
+						}
+						pwshoes.println();
+					}
+
+				}
+
+				catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} finally {
+
+					try {
+						fwshoes.close();
+						pwshoes.close();
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
+				
+			
+			
+			
+			
+			
+			
+			
+			
+			try {
+				fw = new FileWriter(gr);
+				pw = new PrintWriter(fw);
+
+				for (int i = 0; i < tb_Pro.getRowCount(); i++) {
+					for (int j = 0; j < tb_Pro.getColumnCount(); j++) {
+
+						if (j == tb_Pro.getColumnCount()-1) {
+							l = Table_model.getValueAt(i, j).toString();
+							pw.print(l);
+
+						} else {
+							l = Table_model.getValueAt(i, j).toString();
+							pw.print(l);
+							pw.print("/");
+
+						}
+					}
+					pw.println();
+				}
+
+			}
+
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} finally {
+
+				try {
+					fw.close();
+					pw.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
 		}
 
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+
+		if (e.getSource() == tb_Pro) {
+			seltbnum = tb_Pro.getSelectedRow();
+
+			pronum = Integer.parseInt((String) Table_model.getValueAt(seltbnum, 0));
+
+		}
 
 		if (e.getSource() == lb_Image2) {
 			selnum = 0;
@@ -949,10 +1072,10 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_name2.setText(set_name);
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
-					pro_show.Image[pro_show.cc]=resizeImage3;
-					
+					pro_show.Image[pro_show.cc] = resizeImage3;
+
 					String get_price = this.lb_price_arry[i].getText();
-					pro_show.price=pro_show.price+Integer.parseInt(get_price);
+					pro_show.price = pro_show.price + Integer.parseInt(get_price);
 
 					str = top_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -989,10 +1112,10 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_name2.setText(set_name);
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
-					pro_show.Image[pro_show.cc]=resizeImage3;
-					
+					pro_show.Image[pro_show.cc] = resizeImage3;
+
 					String get_price = this.lb_price_arry[i].getText();
-					pro_show.price=pro_show.price+Integer.parseInt(get_price);
+					pro_show.price = pro_show.price + Integer.parseInt(get_price);
 
 					str = pants_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1028,10 +1151,10 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_name2.setText(set_name);
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
-					pro_show.Image[pro_show.cc]=resizeImage3;
-					
+					pro_show.Image[pro_show.cc] = resizeImage3;
+
 					String get_price = this.lb_price_arry[i].getText();
-					pro_show.price=pro_show.price+Integer.parseInt(get_price);
+					pro_show.price = pro_show.price + Integer.parseInt(get_price);
 
 					str = shoes_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1067,15 +1190,14 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 					pro_show.lb_name2.setText(set_name);
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
-					pro_show.Image[pro_show.cc]=resizeImage3;
-					
+					pro_show.Image[pro_show.cc] = resizeImage3;
+
 					String get_price = this.lb_price_arry[i].getText();
-					pro_show.price=pro_show.price+Integer.parseInt(get_price);
+					pro_show.price = pro_show.price + Integer.parseInt(get_price);
 
 					str = Table_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
 					pro_show.ta_under.setText(str);
-					
 
 				}
 
@@ -1101,16 +1223,15 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 					String set_name = this.lb_name_arry[i].getText();
 					String set_price = this.lb_price_arry[i].getText() + " 원";
-					
 
 					pro_show.lb_name2.setText(set_name);
 					pro_show.lb_price2.setText(set_price);
 					pro_show.lb_img.setIcon(new ImageIcon(resizeImage2));
-					pro_show.Image[pro_show.cc]=resizeImage3;
-					
+					pro_show.Image[pro_show.cc] = resizeImage3;
+
 					String get_price = this.lb_price_arry[i].getText();
-					
-					pro_show.price=pro_show.price+Integer.parseInt(get_price);
+
+					pro_show.price = pro_show.price + Integer.parseInt(get_price);
 
 					str = Table_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
