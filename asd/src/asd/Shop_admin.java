@@ -362,6 +362,11 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			pnl_main.add(pnl_arry[i]);
 
 		}
+		
+		
+		tb_pants.setEnabled(false);
+		tb_shoes.setEnabled(false);
+		tb_top.setEnabled(false);
 
 		py = 400 * ((Table_model.getRowCount() / 4) + 1);
 
@@ -723,220 +728,174 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			System.out.println("3");
 		}
 		if (e.getSource() == btn_del) {
-			// System.out.println(seltbnum);
+			//
 			Table_model.removeRow(seltbnum);
-
-			while (true) {
-				int i=0;
-				i++;
+			for (int i = 0; i < top_model.getRowCount(); i++) {
 				if (Integer.parseInt((String) top_model.getValueAt(i, 0)) == pronum) {
 					top_model.removeRow(i);
-					break;
-				}
-				else if (Integer.parseInt((String) pants_model.getValueAt(i, 0)) == pronum) {
-					pants_model.removeRow(i);
-					break;
-				}
-				if (Integer.parseInt((String) shoes_model.getValueAt(i, 0)) == pronum) {
-					shoes_model.removeRow(i);
-					break;
 				}
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
-				
-				try {
-					fwtop = new FileWriter(topgr);
-					pwtop = new PrintWriter(fwtop);
-
-					for (int i = 0; i < tb_top.getRowCount(); i++) {
-						for (int j = 0; j < tb_top.getColumnCount(); j++) {
-
-							if (j == tb_top.getColumnCount()-1) {
-								l = top_model.getValueAt(i, j).toString();
-								pwtop.print(l);
-
-							} else {
-								l = tb_top.getValueAt(i, j).toString();
-								pwtop.print(l);
-								pwtop.print("/");
-
-							}
-						}
-						pwtop.println();
-					}
-
+			for (int j = 0; j < pants_model.getRowCount(); j++) {
+				if (Integer.parseInt((String) pants_model.getValueAt(j, 0)) == pronum) {
+					pants_model.removeRow(j);
 				}
+			}
 
-				catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				} finally {
+			for (int k = 0; k < shoes_model.getRowCount(); k++) {
+				if (Integer.parseInt((String) shoes_model.getValueAt(k, 0)) == pronum) {
+					shoes_model.removeRow(k);
+				}
+			}
+		}
 
-					try {
-						fwtop.close();
-						pwtop.close();
-					} catch (IOException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
+		try
+
+		{
+			fwtop = new FileWriter(topgr);
+			pwtop = new PrintWriter(fwtop);
+
+			for (int i = 0; i < tb_top.getRowCount(); i++) {
+				for (int j = 0; j < tb_top.getColumnCount(); j++) {
+
+					if (j == tb_top.getColumnCount() - 1) {
+						l = top_model.getValueAt(i, j).toString();
+						pwtop.print(l);
+
+					} else {
+						l = tb_top.getValueAt(i, j).toString();
+						pwtop.print(l);
+						pwtop.print("/");
+
 					}
 				}
-				
-			
-			
-			
-			
-			
+				pwtop.println();
+			}
 
-				
-				try {
-					fwpants = new FileWriter(pantsgr);
-					pwpants = new PrintWriter(fwpants);
+		}
 
-					for (int i = 0; i < tb_pants.getRowCount(); i++) {
-						for (int j = 0; j < tb_pants.getColumnCount(); j++) {
+		catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} finally {
 
-							if (j == tb_pants.getColumnCount()-1) {
-								l = pants_model.getValueAt(i, j).toString();
-								pwpants.print(l);
-
-							} else {
-								l = tb_pants.getValueAt(i, j).toString();
-								pwpants.print(l);
-								pwpants.print("/");
-
-							}
-						}
-						pwpants.println();
-					}
-
-				}
-
-				catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				} finally {
-
-					try {
-						fwpants.close();
-						pwpants.close();
-					} catch (IOException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-				}
-				
-			
-			
-			
-			
-
-				try {
-					fwshoes = new FileWriter(shoesgr);
-					pwshoes = new PrintWriter(fwshoes);
-
-					for (int i = 0; i < tb_shoes.getRowCount(); i++) {
-						for (int j = 0; j < tb_shoes.getColumnCount(); j++) {
-
-							if (j == tb_shoes.getColumnCount()-1) {
-								l = shoes_model.getValueAt(i, j).toString();
-								pwshoes.print(l);
-
-							} else {
-								l = tb_shoes.getValueAt(i, j).toString();
-								pwshoes.print(l);
-								pwshoes.print("/");
-
-							}
-						}
-						pwshoes.println();
-					}
-
-				}
-
-				catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				} finally {
-
-					try {
-						fwshoes.close();
-						pwshoes.close();
-					} catch (IOException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-				}
-				
-			
-			
-			
-			
-			
-			
-			
-			
 			try {
-				fw = new FileWriter(gr);
-				pw = new PrintWriter(fw);
+				fwtop.close();
+				pwtop.close();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
 
-				for (int i = 0; i < tb_Pro.getRowCount(); i++) {
-					for (int j = 0; j < tb_Pro.getColumnCount(); j++) {
+		try {
+			fwpants = new FileWriter(pantsgr);
+			pwpants = new PrintWriter(fwpants);
 
-						if (j == tb_Pro.getColumnCount()-1) {
-							l = Table_model.getValueAt(i, j).toString();
-							pw.print(l);
+			for (int i = 0; i < tb_pants.getRowCount(); i++) {
+				for (int j = 0; j < tb_pants.getColumnCount(); j++) {
 
-						} else {
-							l = Table_model.getValueAt(i, j).toString();
-							pw.print(l);
-							pw.print("/");
+					if (j == tb_pants.getColumnCount() - 1) {
+						l = pants_model.getValueAt(i, j).toString();
+						pwpants.print(l);
 
-						}
+					} else {
+						l = tb_pants.getValueAt(i, j).toString();
+						pwpants.print(l);
+						pwpants.print("/");
+
 					}
-					pw.println();
 				}
-
+				pwpants.println();
 			}
 
-			catch (IOException e1) {
+		}
+
+		catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} finally {
+
+			try {
+				fwpants.close();
+				pwpants.close();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
+
+		try {
+			fwshoes = new FileWriter(shoesgr);
+			pwshoes = new PrintWriter(fwshoes);
+
+			for (int i = 0; i < tb_shoes.getRowCount(); i++) {
+				for (int j = 0; j < tb_shoes.getColumnCount(); j++) {
+
+					if (j == tb_shoes.getColumnCount() - 1) {
+						l = shoes_model.getValueAt(i, j).toString();
+						pwshoes.print(l);
+
+					} else {
+						l = tb_shoes.getValueAt(i, j).toString();
+						pwshoes.print(l);
+						pwshoes.print("/");
+
+					}
+				}
+				pwshoes.println();
+			}
+
+		}
+
+		catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} finally {
+
+			try {
+				fwshoes.close();
+				pwshoes.close();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
+
+		try {
+			fw = new FileWriter(gr);
+			pw = new PrintWriter(fw);
+
+			for (int i = 0; i < tb_Pro.getRowCount(); i++) {
+				for (int j = 0; j < tb_Pro.getColumnCount(); j++) {
+
+					if (j == tb_Pro.getColumnCount() - 1) {
+						l = Table_model.getValueAt(i, j).toString();
+						pw.print(l);
+
+					} else {
+						l = Table_model.getValueAt(i, j).toString();
+						pw.print(l);
+						pw.print("/");
+
+					}
+				}
+				pw.println();
+			}
+
+		}
+
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
+
+			try {
+				fw.close();
+				pw.close();
+			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} finally {
-
-				try {
-					fw.close();
-					pw.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-
 		}
 
 	}
@@ -1043,6 +1002,8 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			pnl_menu.add(sp_pnl2, "Center");
 			sp_pnl2.getVerticalScrollBar().setUnitIncrement(16);
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 			revalidate();
 			repaint();
 		}

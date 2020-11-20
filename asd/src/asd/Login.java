@@ -221,6 +221,7 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 						break;
 					} else {
 						System.out.println("성공적으로 로그인 되었습니다.");
+						Shop_nomal.userid=Table_model.getValueAt(k, 0).toString();
 						name=Table_model.getValueAt(k, 2).toString();
 						i = 1;
 						Table_model.setRowCount(0);

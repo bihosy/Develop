@@ -344,7 +344,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 				memstr[3] = s;
 				memstr[4] = YMD;
 				memstr[5] = cb_Phone1.getSelectedItem() + "-" + tf_Phone2.getText() + "-" + tf_Phone3.getText();
-				memstr[6] = tf_Add1.getText() + " " + tf_Add2.getText();
+				memstr[6] = tf_Add1.getText() + "=" + tf_Add2.getText();
 				memstr[7] = "false";
 
 				Table_model.addRow(memstr);
