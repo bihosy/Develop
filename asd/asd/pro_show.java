@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -43,7 +44,6 @@ public class pro_show extends JFrame implements ActionListener {
 	JComboBox cb_color; // 색상 콤보박스
 	
 	public pro_show(){
-		
 		
 		
 		
@@ -124,6 +124,7 @@ public class pro_show extends JFrame implements ActionListener {
 			bas_price[cc]=lb_price2.getText();
 			bas_size[cc]=cb_size.getSelectedItem().toString();
 			cc++;
+			price = price + Integer.parseInt(Shop_nomal.get_price);
 			System.out.println(cc);
 			this.setDefaultCloseOperation(3);
 			this.setVisible(false);

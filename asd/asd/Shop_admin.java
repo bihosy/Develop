@@ -7,31 +7,24 @@ import java.io.*;
 import javax.imageio.*;
 import javax.swing.*;
 import javax.swing.table.*;
+import javax.swing.text.*;
 
-public class Shop_nomal extends JFrame implements ActionListener, MouseListener, ItemListener {
+public class Shop_admin extends JFrame implements ActionListener, MouseListener {
 
-	JPanel pnl_Basket = new JPanel(); // this에 붙어있는패널
-	JPanel pnl_Basket_menu = new JPanel(); // pnl Center에 붙어있는 패널
-	JPanel pnl_Basket_main = new JPanel();// menu에 Center로 붙어있는 패널
-	JPanel pnl_Basket_buy = new JPanel();
-	JPanel[] pnl_Basket_shopbasket = new JPanel[99];
+	JButton btn_del = new JButton("삭제");
 
 	// --------DB 테이블 관련 --------//
 
-	String headermem[] = { "ID", "PW", "이름", "성별", "생년월일", "휴대폰", "주소", "권한" };
 	String header[] = { "상품번호", "사진경로", "상품명", "가격", "사이즈", "내용" };
 	String contents[][] = {};
 	String s = "";
-	DefaultTableModel Table_model, top_model, pants_model, shoes_model, mem_model;
-	JTable tb_Pro, tb_top, tb_pants, tb_shoes, tb_mem;
+	DefaultTableModel Table_model, top_model, pants_model, shoes_model;
+	JTable tb_Pro, tb_top, tb_pants, tb_shoes;
 	// --------DB 테이블 관련 --------//
 
 	Color bakcc = new Color(255, 255, 255, 0);
 
 	// ----------------파일 리드라이트-----------//
-	FileReader memfr = null;// 파일객체 읽어오기
-	BufferedReader membr = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
-
 	BufferedReader br = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
 	PrintWriter pw = null;// 버퍼를 이용해서 만들어진 파일 쓰기도구
 	BufferedReader brtop = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
@@ -50,13 +43,11 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	FileReader frshoes = null;// 파일객체 읽어오기
 	FileWriter fwshoes = null;// 파일객체 쓰기
 
-	static String userid;
 	String gr = "product.txt";// 경로저장
 	String topgr = "top.txt";// 경로저장
 	String pantsgr = "pants.txt";// 경로저장
 	String shoesgr = "shoes.txt";// 경로저장
-	String memgr = "Members.txt";// 경로저장
-	JLabel[] lb_Basket_price = new JLabel[99];
+
 	String img_gr = "noimage.png";
 	String size = "";
 
@@ -68,18 +59,19 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	static int naesize = 0;
 	int selnum = 0;
 	Dimension pnlsize = new Dimension();
-	JLabel[] lb_Basket_name;
-	int py;
 
-	JLabel lb_Basket_gunprice = new JLabel();
+	int py;
+	int pronum = 0;
+	int seltbnum = 0;
+
 	int idx = 0;
 	// ----------------파일 리드라이트-----------//
-	String[] bas_name;
 	ImageIcon background = new ImageIcon("ddd.jpg");
 	JPanel pnl = new JPanel();
 	JPanel pnl_logoinfo = new JPanel();
 	JPanel pnl_menu = new JPanel();
 	JPanel pnl_spnl = new JPanel();
+	JPanel pnl_under = new JPanel();
 	JPanel pnl_btn = new JPanel();
 	JPanel pnl_img = new JPanel(); // 상단 이미지 패널
 	JPanel pnl_main = new JPanel() {
@@ -92,9 +84,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	JPanel pnl_image = new JPanel();
 	JPanel pnl_info = new JPanel();
 	JButton buybuy = new JButton("구매하기");
-	JButton deldel = new JButton("삭제하기");
 	JPanel[] pnl_arry = new JPanel[9];
-	JCheckBox[] cb_del = new JCheckBox[9];
 
 	JPanel[] pnl_arry2 = new JPanel[9];
 	JPanel[] pnl_arry3 = new JPanel[9]; // 상품정보
@@ -115,11 +105,11 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	JLabel lb_top_setinfo1 = new JLabel(" rozen"); // 임시로 rozen넣어놈 작업할땐 지우고 받아온
 													// 아이디를 여기 라벨에 붙이면됨
 	JLabel lb_top_setinfo2 = new JLabel("admin");// 임시로 admin넣어놈 작업할땐 지우고 받아온
-													// 아이디를 여기 라벨에 붙이면됨
+	JButton btn_write = new JButton("글쓰기"); // 아이디를 여기 라벨에 붙이면됨
 	JLabel lb_Image2; // 로고 들어갈 상단 라벨
 	JLabel lb_WC; // 상단 우측 라벨(WelCome!)
 
-	String[] str_btn_name = { "상의", "하의", "신발", "장바구니" };
+	String[] str_btn_name = { "상의", "하의", "신발", "글 관리" };
 	int i;
 	int j;
 	int k;
@@ -137,33 +127,31 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 
 	Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-	public Shop_nomal() {
-		pnl_Basket_main.setLayout(new BoxLayout(pnl_Basket_main, BoxLayout.Y_AXIS));
-		// pnl_Basket_main.setLayout(null);
-		buybuy.addActionListener(this);
+	public Shop_admin() {
+
 		pnl.setBackground(Color.WHITE);
 		pnl_btn.setBackground(Color.WHITE);
-		deldel.addActionListener(this);
 
 		// --------DB 테이블 관련 --------//
 		Table_model = new DefaultTableModel(contents, header);
 		top_model = new DefaultTableModel(contents, header);
 		pants_model = new DefaultTableModel(contents, header);
 		shoes_model = new DefaultTableModel(contents, header);
-		mem_model = new DefaultTableModel(contents, headermem);
 
 		tb_Pro = new JTable(Table_model);
 		tb_top = new JTable(top_model);
 		tb_pants = new JTable(pants_model);
 		tb_shoes = new JTable(shoes_model);
-		tb_mem = new JTable(mem_model);
+		
+		tb_Pro.setRowHeight(25);
+		tb_top.setRowHeight(25);
+		tb_pants.setRowHeight(25);
+		tb_shoes.setRowHeight(25);
 		// --------DB 테이블 관련 --------//
 
+		btn_del.addActionListener(this);
+
 		try {
-
-			memfr = new FileReader(memgr);
-			membr = new BufferedReader(memfr);// 읽어온 파일 버퍼에 객체 담기
-
 			fr = new FileReader(gr);
 			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
 
@@ -191,13 +179,6 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 				top_model.addRow(str);
 
 			}
-			while ((l = membr.readLine()) != null) {
-
-				String[] str = l.split("/");
-
-				mem_model.addRow(str);
-
-			}
 			while ((l = brpants.readLine()) != null) {
 
 				String[] str = l.split("/");
@@ -223,13 +204,11 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 				frtop.close();
 				frpants.close();
 				frshoes.close();
-				memfr.close();
 
 				br.close();
 				brtop.close();
 				brpants.close();
 				brshoes.close();
-				membr.close();
 
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -240,7 +219,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		Image Image3 = resizeImage2.getScaledInstance(300, 100, Image.SCALE_SMOOTH);
 		ImageIcon Image4 = new ImageIcon(Image3);
 		lb_Image2 = new JLabel(Image4);
-		lb_WC = new JLabel(Login.name + "님 환영합니다");
+		lb_WC = new JLabel("어서오세요 " + Login.name + "님 관리자 계정입니다");
 
 		this.setSize(1000, 1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -258,8 +237,9 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		pnl_logoinfo.setPreferredSize(new Dimension(1000, 100));
 		pnl_logoinfo.setBackground(bakcc);
 		lb_Image2.setBounds(340, 0, 300, 100);
-		lb_WC.setBounds(800, 70, 200, 25);
+		lb_WC.setBounds(630, 70, 350, 25);
 		lb_WC.setFont(WC_Font);
+		lb_WC.setHorizontalAlignment(JLabel.RIGHT);
 
 		// lb_Image
 
@@ -363,6 +343,11 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			pnl_main.add(pnl_arry[i]);
 
 		}
+		
+		
+		tb_pants.setEnabled(false);
+		tb_shoes.setEnabled(false);
+		tb_top.setEnabled(false);
 
 		py = 400 * ((Table_model.getRowCount() / 4) + 1);
 
@@ -371,20 +356,28 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 
 		pnl_menu.add(sp_pnl, "Center");
-
+		pnl_under.add(btn_write);
+		btn_write.addActionListener(this);
+		this.add(pnl_under, "South");
 		// pnl_menu.add(sp_pnl);
 		this.setVisible(true);
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new Shop_nomal();
+		new Shop_admin();
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+
+		if (e.getSource() == btn_write) {
+			new Write();
+			this.setDefaultCloseOperation(3);
+			this.setVisible(false);
+		}
 
 		if (e.getSource() == btn_menu[0]) {
 
@@ -415,7 +408,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 
 				}
 
-				// System.out.println();
+				System.out.println();
 
 				try {
 					image = ImageIO.read(new File(img_gr));
@@ -477,6 +470,8 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 
 			revalidate();
 			repaint();
@@ -571,6 +566,8 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 			revalidate();
 			repaint();
 		}
@@ -666,6 +663,8 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 
 			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
 			revalidate();
@@ -673,372 +672,248 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		}
 
 		else if (e.getSource() == btn_menu[3]) {
-
-			// 장바구니 변수 //
-			int bas_count = pro_show.cc; // bas_count 숫자에 따라 장바구니에 만들어지는 갯수가 달라짐
-											// 2이면 장바구니에 패널 2개
-			bas_name = pro_show.bas_name;
-			String[] bas_price = pro_show.bas_price;
-			String[] bas_size = pro_show.bas_size;
-			// 생성현재는 2로
-			// 주었음 장바구니에 넣은 상품의갯수를 받아오면됨
-
-			pnl_Basket_buy.setBackground(Color.gray);
-			JScrollPane sp_Basket_pnl;// menu에 Center로 붙어있는 패널
-
-			// 장바구니 패널
-			// bas_count만큼
-			// 생성
-			JLabel[] lb_Basket_shopbasket_image = new JLabel[bas_count]; // 장바구니
-																			// 이미지bas_count만큼
-																			// 생성
-
-			JPanel[] pnl_Basket_product_title = new JPanel[bas_count]; // 상품정보
-			JPanel[] pnl_Basket_product_description = new JPanel[bas_count]; // 상품
-																				// 정보
-																				// 내용
-
-			JLabel[] lb_Basket_name_title = new JLabel[bas_count];
-			JLabel[] lb_Basket_size_title = new JLabel[bas_count];
-			JLabel[] lb_Basket_price_title = new JLabel[bas_count];
-
-			JLabel[] lb_Basket_name = new JLabel[bas_count];
-
-			JLabel[] lb_Basket_size = new JLabel[bas_count];
-
-			JButton[] btn_del = new JButton[bas_count];
-
-			int Bas_i;
-
-			pnl_Basket_main.setBackground(Color.WHITE);
-
-			// sp_pnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-			pnl_Basket.setLayout(new BorderLayout());
-			pnl_Basket_menu.setLayout(new BorderLayout());
-
-			// 패널의
-
-			int y = 100; // pnl_Basket_shopbasket[i]의 패널의 y값을 증가시켜주기위한 초기값
-			BufferedImage[] img = null;
-			// 장바구니 변수
-
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
-			pnl_Basket_buy.removeAll();
-			pnl_Basket_main.removeAll();
+			tb_Pro.addMouseListener(this);
+			JPanel pnl_prodb = new JPanel(null);
+			pnl_prodb.setBackground(Color.white);
+			JLabel[] lb_name = new JLabel[4];
 
-			for (Bas_i = 0; Bas_i < bas_count; Bas_i++) { // bas_count 장바구니에 넣은
-															// 상품의 갯수만큼 패널만듬
-				pnl_Basket_shopbasket[Bas_i] = new JPanel();
-				lb_Basket_name[Bas_i] = new JLabel(bas_name[Bas_i]);
-				lb_Basket_size[Bas_i] = new JLabel(bas_size[Bas_i]);
-				lb_Basket_price[Bas_i] = new JLabel(bas_price[Bas_i]);
-				btn_del[Bas_i] = new JButton("삭제");
-				lb_Basket_shopbasket_image[Bas_i] = new JLabel();// "이미지자리"
-																	// 라는 글자
-																	// 삭제후
-				// 이미지 넣으면됨
+			lb_name[0] = new JLabel("전체항목");
+			lb_name[1] = new JLabel("상의");
+			lb_name[2] = new JLabel("하의");
+			lb_name[3] = new JLabel("신발");
+			
+			Font name_font = new Font("돋움", Font.BOLD, 18);
+			lb_name[0].setFont(name_font);
+			lb_name[1].setFont(name_font);
+			lb_name[2].setFont(name_font);
+			lb_name[3].setFont(name_font);
 
-				lb_Basket_shopbasket_image[Bas_i].setIcon(new ImageIcon(pro_show.Image[Bas_i]));
-				pnl_Basket_product_title[Bas_i] = new JPanel();
-				pnl_Basket_product_description[Bas_i] = new JPanel();
+			JScrollPane sp_prodb = new JScrollPane(tb_Pro);
+			JScrollPane sp_topdb = new JScrollPane(tb_top);
+			JScrollPane sp_pantsdb = new JScrollPane(tb_pants);
+			JScrollPane sp_shoesdb = new JScrollPane(tb_shoes);
+			
+			lb_name[0].setBounds(455, 10, 100, 25);
+			sp_prodb.setBounds(0, 60, 985, 140);
+			sp_prodb.getViewport().setBackground(Color.white);
+			
+			lb_name[1].setBounds(470, 210, 100, 25);
+			sp_topdb.setBounds(0, 260, 985, 140);
+			sp_topdb.getViewport().setBackground(Color.white);
+			
+			lb_name[2].setBounds(470, 410, 100, 25);
+			sp_pantsdb.setBounds(0, 460, 985, 140);
+			sp_pantsdb.getViewport().setBackground(Color.white);
+			
+			lb_name[3].setBounds(470, 610, 100, 25);
+			sp_shoesdb.setBounds(0, 660, 985, 140);
+			sp_shoesdb.getViewport().setBackground(Color.white);
 
-				pnl_Basket_main.add(pnl_Basket_shopbasket[Bas_i]);
-				// pnl_Basket_shopbasket[Bas_i].setBounds(100, y, 800, 300); //
-				// 나중에
-				// i값이
-				// 증가할대마다
-				// Y값을
-				// +100정도 주면서
-				pnl_Basket_shopbasket[Bas_i].setBackground(Color.WHITE);
-				y = y + 300; // 패널이 생성될때마다 이전 pnl_Basket_shopbasket[i]의y값에
-								// +100만큼 밑에 생성
-				pnl_Basket_shopbasket[Bas_i].setLayout(null);
-
-				pnl_Basket_product_title[Bas_i]
-						.setLayout(new BoxLayout(pnl_Basket_product_title[Bas_i], BoxLayout.Y_AXIS));
-				pnl_Basket_product_description[Bas_i]
-						.setLayout(new BoxLayout(pnl_Basket_product_description[Bas_i], BoxLayout.Y_AXIS));
-
-				lb_Basket_name_title[Bas_i] = new JLabel("상품명 : ");
-				lb_Basket_size_title[Bas_i] = new JLabel("사이즈 : ");
-				lb_Basket_price_title[Bas_i] = new JLabel("가격 : ");
-
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_name_title[Bas_i]);
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_size_title[Bas_i]);
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_price_title[Bas_i]);
-				Font font = new Font("", Font.BOLD, 20);
-				lb_Basket_name_title[Bas_i].setFont(font);
-				lb_Basket_size_title[Bas_i].setFont(font);
-				lb_Basket_price_title[Bas_i].setFont(font);
-
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_name[Bas_i]);
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_size[Bas_i]);
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_price[Bas_i]);
-				lb_Basket_name[Bas_i].setFont(font);
-				lb_Basket_size[Bas_i].setFont(font);
-				lb_Basket_price[Bas_i].setFont(font);
-
-				cb_del[Bas_i] = new JCheckBox();
-				cb_del[Bas_i].addActionListener(this);
-
-				pnl_Basket_product_description[Bas_i].add(cb_del[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(lb_Basket_shopbasket_image[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_title[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_description[Bas_i]);
-
-				lb_Basket_shopbasket_image[Bas_i].setBounds(0, -100, 250, 400);
-				pnl_Basket_product_title[Bas_i].setBounds(200, 30, 100, 200);
-
-				pnl_Basket_product_title[Bas_i].setBackground(Color.WHITE);
-				pnl_Basket_product_description[Bas_i].setBounds(300, 30, 200, 200);
-				pnl_Basket_product_description[Bas_i].setBackground(Color.WHITE);
-
-			}
-			int py = 0;
-			py = 100 + (300 * bas_count);
-
-			// pnl_Basket.add(pnl_Basket_menu, "Center");
-			pnl_Basket_main.setPreferredSize(new Dimension(900, py));
-
-			sp_pnl = new JScrollPane(pnl_Basket_main);
-
-			// this.add(pnl_Basket);
-
-			pnl_menu.add(sp_pnl, "Center");
+			pnl_prodb.add(lb_name[0]);
+			pnl_prodb.add(sp_prodb);
+			pnl_prodb.add(lb_name[1]);
+			pnl_prodb.add(sp_topdb);
+			pnl_prodb.add(lb_name[2]);
+			pnl_prodb.add(sp_pantsdb);
+			pnl_prodb.add(lb_name[3]);
+			pnl_prodb.add(sp_shoesdb);
+			pnl_menu.add(pnl_prodb);
 			pnl_menu.add(pnl_btn, "North");
-			lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
-			pnl_Basket_buy.add(lb_Basket_gunprice);
-			pnl_Basket_buy.add(buybuy);
-			pnl_Basket_buy.add(deldel);
-
-			pnl_menu.add(pnl_Basket_buy, "South");
-
-			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
-
+			pnl_under.removeAll();
+			pnl_under.add(btn_del);
+			pnl_under.setBackground(Color.white);
 			revalidate();
 			repaint();
 
 		}
-
 		if (e.getSource() == buybuy) {
-
-			new paymentTotal();
-			if (pro_show.cc > 1) {
-				paymentTotal.lb_Requiredinput.setText(bas_name[0] + " 외 " + (pro_show.cc - 1) + "개");
-			}
-			if (pro_show.cc == 1) {
-				paymentTotal.lb_Requiredinput.setText(bas_name[0]);
-			}
-			for (int memi = 0; memi < mem_model.getRowCount(); memi++) {
-
-				String sksnrl = mem_model.getValueAt(memi, 6).toString();
-				String vhs = mem_model.getValueAt(memi, 5).toString();
-
-				String[] adr = new String[2];
-				String[] phnum = new String[3];
-				adr = sksnrl.split("=");
-				phnum = vhs.split("-");
-
-				if (userid.equals(mem_model.getValueAt(memi, 0).toString())) {
-					CusInfo.fd_reciever.setText(mem_model.getValueAt(memi, 2).toString());
-					CusInfo.fd_address2.setText(adr[0]);
-					CusInfo.fd_address3.setText(adr[1]);
-					CusInfo.fd_phone.setText(phnum[1]);
-					CusInfo.fd_phone2.setText(phnum[2]);
-
-					if (phnum[0].equals("010")) {
-						CusInfo.cb_phone.setSelectedIndex(0);
-					}
-					if (phnum[0].equals("011")) {
-						CusInfo.cb_phone.setSelectedIndex(1);
-					}
-					if (phnum[0].equals("016")) {
-						CusInfo.cb_phone.setSelectedIndex(2);
-					}
-					if (phnum[0].equals("017")) {
-						CusInfo.cb_phone.setSelectedIndex(3);
-					}
-
+			System.out.println("3");
+		}
+		if (e.getSource() == btn_del) {
+			//
+			Table_model.removeRow(seltbnum);
+			for (int i = 0; i < top_model.getRowCount(); i++) {
+				if (Integer.parseInt((String) top_model.getValueAt(i, 0)) == pronum) {
+					top_model.removeRow(i);
 				}
+			}
+			for (int j = 0; j < pants_model.getRowCount(); j++) {
+				if (Integer.parseInt((String) pants_model.getValueAt(j, 0)) == pronum) {
+					pants_model.removeRow(j);
+				}
+			}
+
+			for (int k = 0; k < shoes_model.getRowCount(); k++) {
+				if (Integer.parseInt((String) shoes_model.getValueAt(k, 0)) == pronum) {
+					shoes_model.removeRow(k);
+				}
+			}
+		}
+
+		try
+
+		{
+			fwtop = new FileWriter(topgr);
+			pwtop = new PrintWriter(fwtop);
+
+			for (int i = 0; i < tb_top.getRowCount(); i++) {
+				for (int j = 0; j < tb_top.getColumnCount(); j++) {
+
+					if (j == tb_top.getColumnCount() - 1) {
+						l = top_model.getValueAt(i, j).toString();
+						pwtop.print(l);
+
+					} else {
+						l = tb_top.getValueAt(i, j).toString();
+						pwtop.print(l);
+						pwtop.print("/");
+
+					}
+				}
+				pwtop.println();
 			}
 
 		}
-		int maprice = 0;
-		if (e.getSource() == deldel) {
 
-			for (int sel = 0; sel < pro_show.cc; sel++) {
-				boolean select = cb_del[sel].isSelected();
+		catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} finally {
 
-				if (select == true) {
-					String manumnum = lb_Basket_price[sel].getText().replace(" 원", "");
-					maprice = Integer.parseInt(manumnum);
-					pro_show.price = pro_show.price - maprice;
-					lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
+			try {
+				fwtop.close();
+				pwtop.close();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
 
-					pnl_Basket_shopbasket[sel].removeAll();
+		try {
+			fwpants = new FileWriter(pantsgr);
+			pwpants = new PrintWriter(fwpants);
 
-					pro_show.cc--;
+			for (int i = 0; i < tb_pants.getRowCount(); i++) {
+				for (int j = 0; j < tb_pants.getColumnCount(); j++) {
+
+					if (j == tb_pants.getColumnCount() - 1) {
+						l = pants_model.getValueAt(i, j).toString();
+						pwpants.print(l);
+
+					} else {
+						l = tb_pants.getValueAt(i, j).toString();
+						pwpants.print(l);
+						pwpants.print("/");
+
+					}
 				}
+				pwpants.println();
 			}
 
-			//System.out.println("    " + pro_show.cc);
+		}
 
-			// 장바구니 변수 //
-			int bas_count = pro_show.cc; // bas_count 숫자에 따라 장바구니에 만들어지는 갯수가 달라짐
-											// 2이면 장바구니에 패널 2개
-			bas_name = pro_show.bas_name;
-			String[] bas_price = pro_show.bas_price;
-			String[] bas_size = pro_show.bas_size;
-			// 생성현재는 2로
-			// 주었음 장바구니에 넣은 상품의갯수를 받아오면됨
+		catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} finally {
 
-			pnl_Basket_buy.setBackground(Color.gray);
-			JScrollPane sp_Basket_pnl;// menu에 Center로 붙어있는 패널
-
-			// 장바구니 패널
-			// bas_count만큼
-			// 생성
-			JLabel[] lb_Basket_shopbasket_image = new JLabel[bas_count]; // 장바구니
-																			// 이미지bas_count만큼
-																			// 생성
-
-			JPanel[] pnl_Basket_product_title = new JPanel[bas_count]; // 상품정보
-			JPanel[] pnl_Basket_product_description = new JPanel[bas_count]; // 상품
-																				// 정보
-																				// 내용
-
-			JLabel[] lb_Basket_name_title = new JLabel[bas_count];
-			JLabel[] lb_Basket_size_title = new JLabel[bas_count];
-			JLabel[] lb_Basket_price_title = new JLabel[bas_count];
-
-			JLabel[] lb_Basket_name = new JLabel[bas_count];
-
-			JLabel[] lb_Basket_size = new JLabel[bas_count];
-
-			JButton[] btn_del = new JButton[bas_count];
-
-			int Bas_i;
-
-			pnl_Basket_main.setBackground(Color.WHITE);
-
-			// sp_pnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-			pnl_Basket.setLayout(new BorderLayout());
-			pnl_Basket_menu.setLayout(new BorderLayout());
-
-			// 패널의
-
-			int y = 100; // pnl_Basket_shopbasket[i]의 패널의 y값을 증가시켜주기위한 초기값
-			BufferedImage[] img = null;
-			// 장바구니 변수
-
-			pnl_menu.removeAll();
-			pnl_main.removeAll();
-			sp_pnl.removeAll();
-			pnl_Basket_buy.removeAll();
-			pnl_Basket_main.removeAll();
-
-			for (Bas_i = 0; Bas_i < bas_count; Bas_i++) { // bas_count 장바구니에 넣은
-															// 상품의 갯수만큼 패널만듬
-				pnl_Basket_shopbasket[Bas_i] = new JPanel();
-				lb_Basket_name[Bas_i] = new JLabel(bas_name[Bas_i]);
-				lb_Basket_size[Bas_i] = new JLabel(bas_size[Bas_i]);
-				lb_Basket_price[Bas_i] = new JLabel(bas_price[Bas_i]);
-				btn_del[Bas_i] = new JButton("삭제");
-				lb_Basket_shopbasket_image[Bas_i] = new JLabel();// "이미지자리"
-																	// 라는 글자
-																	// 삭제후
-				// 이미지 넣으면됨
-
-				lb_Basket_shopbasket_image[Bas_i].setIcon(new ImageIcon(pro_show.Image[Bas_i]));
-				pnl_Basket_product_title[Bas_i] = new JPanel();
-				pnl_Basket_product_description[Bas_i] = new JPanel();
-
-				pnl_Basket_main.add(pnl_Basket_shopbasket[Bas_i]);
-				// pnl_Basket_shopbasket[Bas_i].setBounds(100, y, 800, 300); //
-				// 나중에
-				// i값이
-				// 증가할대마다
-				// Y값을
-				// +100정도 주면서
-				pnl_Basket_shopbasket[Bas_i].setBackground(Color.WHITE);
-				y = y + 300; // 패널이 생성될때마다 이전 pnl_Basket_shopbasket[i]의y값에
-								// +100만큼 밑에 생성
-				pnl_Basket_shopbasket[Bas_i].setLayout(null);
-
-				pnl_Basket_product_title[Bas_i]
-						.setLayout(new BoxLayout(pnl_Basket_product_title[Bas_i], BoxLayout.Y_AXIS));
-				pnl_Basket_product_description[Bas_i]
-						.setLayout(new BoxLayout(pnl_Basket_product_description[Bas_i], BoxLayout.Y_AXIS));
-
-				lb_Basket_name_title[Bas_i] = new JLabel("상품명 : ");
-				lb_Basket_size_title[Bas_i] = new JLabel("사이즈 : ");
-				lb_Basket_price_title[Bas_i] = new JLabel("가격 : ");
-
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_name_title[Bas_i]);
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_size_title[Bas_i]);
-				pnl_Basket_product_title[Bas_i].add(lb_Basket_price_title[Bas_i]);
-				Font font = new Font("", Font.BOLD, 20);
-				lb_Basket_name_title[Bas_i].setFont(font);
-				lb_Basket_size_title[Bas_i].setFont(font);
-				lb_Basket_price_title[Bas_i].setFont(font);
-
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_name[Bas_i]);
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_size[Bas_i]);
-				pnl_Basket_product_description[Bas_i].add(lb_Basket_price[Bas_i]);
-				lb_Basket_name[Bas_i].setFont(font);
-				lb_Basket_size[Bas_i].setFont(font);
-				lb_Basket_price[Bas_i].setFont(font);
-
-				cb_del[Bas_i] = new JCheckBox();
-				cb_del[Bas_i].addActionListener(this);
-
-				pnl_Basket_product_description[Bas_i].add(cb_del[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(lb_Basket_shopbasket_image[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_title[Bas_i]);
-				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_description[Bas_i]);
-
-				lb_Basket_shopbasket_image[Bas_i].setBounds(0, -100, 250, 400);
-				pnl_Basket_product_title[Bas_i].setBounds(200, 30, 100, 200);
-
-				pnl_Basket_product_title[Bas_i].setBackground(Color.WHITE);
-				pnl_Basket_product_description[Bas_i].setBounds(300, 30, 200, 200);
-				pnl_Basket_product_description[Bas_i].setBackground(Color.WHITE);
-
+			try {
+				fwpants.close();
+				pwpants.close();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
-			int py = 0;
-			py = 100 + (300 * bas_count);
+		}
 
-			// pnl_Basket.add(pnl_Basket_menu, "Center");
-			pnl_Basket_main.setPreferredSize(new Dimension(900, py));
+		try {
+			fwshoes = new FileWriter(shoesgr);
+			pwshoes = new PrintWriter(fwshoes);
 
-			sp_pnl = new JScrollPane(pnl_Basket_main);
+			for (int i = 0; i < tb_shoes.getRowCount(); i++) {
+				for (int j = 0; j < tb_shoes.getColumnCount(); j++) {
 
-			// this.add(pnl_Basket);
+					if (j == tb_shoes.getColumnCount() - 1) {
+						l = shoes_model.getValueAt(i, j).toString();
+						pwshoes.print(l);
 
-			pnl_menu.add(sp_pnl, "Center");
-			pnl_menu.add(pnl_btn, "North");
-			lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
-			pnl_Basket_buy.add(lb_Basket_gunprice);
-			pnl_Basket_buy.add(buybuy);
-			pnl_Basket_buy.add(deldel);
+					} else {
+						l = tb_shoes.getValueAt(i, j).toString();
+						pwshoes.print(l);
+						pwshoes.print("/");
 
-			pnl_menu.add(pnl_Basket_buy, "South");
+					}
+				}
+				pwshoes.println();
+			}
 
-			sp_pnl.getVerticalScrollBar().setUnitIncrement(16);
+		}
 
-			revalidate();
-			repaint();
+		catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} finally {
 
+			try {
+				fwshoes.close();
+				pwshoes.close();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
+
+		try {
+			fw = new FileWriter(gr);
+			pw = new PrintWriter(fw);
+
+			for (int i = 0; i < tb_Pro.getRowCount(); i++) {
+				for (int j = 0; j < tb_Pro.getColumnCount(); j++) {
+
+					if (j == tb_Pro.getColumnCount() - 1) {
+						l = Table_model.getValueAt(i, j).toString();
+						pw.print(l);
+
+					} else {
+						l = Table_model.getValueAt(i, j).toString();
+						pw.print(l);
+						pw.print("/");
+
+					}
+				}
+				pw.println();
+			}
+
+		}
+
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
+
+			try {
+				fw.close();
+				pw.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+
+		if (e.getSource() == tb_Pro) {
+			seltbnum = tb_Pro.getSelectedRow();
+
+			pronum = Integer.parseInt((String) Table_model.getValueAt(seltbnum, 0));
+
+		}
 
 		if (e.getSource() == lb_Image2) {
 			selnum = 0;
@@ -1132,6 +1007,8 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			pnl_menu.add(sp_pnl2, "Center");
 			sp_pnl2.getVerticalScrollBar().setUnitIncrement(16);
 			pnl_menu.add(pnl_btn, "North");
+			pnl_under.removeAll();
+			pnl_under.add(btn_write);
 			revalidate();
 			repaint();
 		}
@@ -1346,14 +1223,6 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-
-		}
-
 	}
 
 }

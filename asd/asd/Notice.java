@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class Notice extends JDialog implements ActionListener {
@@ -14,7 +17,7 @@ public class Notice extends JDialog implements ActionListener {
 	String s = "";
 	DefaultTableModel Table_model;
 	JTable tb_notice;
-	
+	JPanel P = new JPanel();
 	
 	
 	
@@ -34,7 +37,7 @@ public class Notice extends JDialog implements ActionListener {
 	
 	
 	
-	
+	MatteBorder tb = new MatteBorder(3, 3, 3, 3, Color.black);
 	
 	JPanel pnl_notice = new JPanel();
 	JPanel pnl_nae = new JPanel();
@@ -56,12 +59,13 @@ public class Notice extends JDialog implements ActionListener {
 		
 		this.setSize(390, 500);
 		this.setAlwaysOnTop(true);
-		this.setLayout(new BorderLayout());
 		this.setUndecorated(true);
 		ta_nae.setEditable(false);
 		setLocationRelativeTo(null);
 		Font Font_notice = new Font("돋움", Font.BOLD, 18);
 		lb_notice.setFont(Font_notice);
+		
+		P.setLayout(new BorderLayout());
 		try {
 			fr = new FileReader(gr);
 			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
@@ -108,9 +112,12 @@ public class Notice extends JDialog implements ActionListener {
 		pnl_nae.add(ta_nae);
 		pnl_exit.add(btn_exit);
 		btn_exit.addActionListener(this);
-		this.add(pnl_notice, BorderLayout.NORTH);
-		this.add(pnl_nae, BorderLayout.CENTER);
-		this.add(pnl_exit, BorderLayout.SOUTH);
+		
+		this.add(P);
+		P.setBorder(tb);
+		P.add(pnl_notice, BorderLayout.NORTH);
+		P.add(pnl_nae, BorderLayout.CENTER);
+		P.add(pnl_exit, BorderLayout.SOUTH);
 		this.setVisible(true);
 	
 	
@@ -127,5 +134,4 @@ public class Notice extends JDialog implements ActionListener {
 		this.setDefaultCloseOperation(0);
 		this.setVisible(false);
 	}
-
 }

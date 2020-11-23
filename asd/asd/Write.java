@@ -76,14 +76,14 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 	String l;// 파일 읽어서 문자열 저장
 	int idx = 0;
+	int k = 0;
 	// ----------------파일 리드라이트-----------//
 
-	String[] menu = { "Outer", "Top", "Bottom", "Acc", "Shoes" };
 	JTextField fd_title, fd_price, fd_size;
 	JTextArea ta_contents;
 	JPanel pnl_north, pnl_north1, pnl_north2, pnl_middle, pnl_south;
 	JComboBox com_menu;
-	JLabel lb_title, lb_upload1, lb_upload2, lb_upload3, lb_image, lb_price, lb_size, lb_blank, lb_blank2;
+	JLabel lb_title, lb_upload1, lb_upload2, lb_upload3, lb_image, lb_price, lb_size, lb_class;
 	JButton btn_reload, btn_preview;
 	static JButton btn_finish;
 	ImageIcon img;
@@ -93,8 +93,6 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 	@SuppressWarnings("rawtypes")
 
 	public Write() {
-
-		cb_pro = new JComboBox(proname);
 		
 		
 		// --------DB 테이블 관련 --------//
@@ -224,31 +222,43 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 		pnl_north = new JPanel();
 		pnl_north1 = new JPanel();
-		pnl_north2 = new JPanel(new FlowLayout());
+		pnl_north2 = new JPanel(null);
 		pnl_north2.setPreferredSize(new Dimension(350, 130));
 		pnl_middle = new JPanel();
 		pnl_south = new JPanel();
 		pnl_south.setPreferredSize(new Dimension(60, 60));
 
-		lb_blank = new JLabel("                ");
+		lb_title = new JLabel("상품명 :");
 		lb_price = new JLabel("가격 :");
+		lb_class = new JLabel("분류 :");
 		lb_size = new JLabel("사이즈 :");
-		lb_blank2 = new JLabel("                                                         ");
-		lb_title = new JLabel("제목 :");
 		img = new ImageIcon(img_gr);
 		lb_image = new JLabel(img);
+		cb_pro = new JComboBox(proname);
 
 		Color color = new Color(176, 196, 222);
 		
 		btn_reload = new JButton("불러 오기");
 		
+		lb_title.setBounds(10, 20, 50, 25);
+		fd_title.setBounds(80, 20, 250, 25);
+		lb_price.setBounds(10, 50, 50, 25);
+		fd_price.setBounds(80, 50, 250, 25);
+		lb_class.setBounds(10, 80, 50, 25);
+		cb_pro.setBounds(80, 80, 60, 25);
+		lb_size.setBounds(15, 110, 50, 25);
+		cb_sizeS.setBounds(75, 110, 50, 25);
+		cb_sizeM.setBounds(125, 110, 50, 25);
+		cb_sizeL.setBounds(175, 110, 50, 25);
+		
+		lb_title.setHorizontalAlignment(JLabel.RIGHT);
+		lb_price.setHorizontalAlignment(JLabel.RIGHT);
+		lb_class.setHorizontalAlignment(JLabel.RIGHT);
 		
 		btn_finish = new JButton("등록");
 		btn_finish.setPreferredSize(new Dimension(90, 30));
 		btn_finish.setBackground(color);
 		btn_preview = new JButton("미리 보기");
-
-		com_menu = new JComboBox(menu);
 
 		pnl_north1.add(lb_image);
 
@@ -256,13 +266,12 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		pnl_north2.add(fd_title);
 		pnl_north2.add(lb_price);
 		pnl_north2.add(fd_price);
-		pnl_north2.add(lb_blank);
+		pnl_north2.add(lb_class);
+		pnl_north2.add(cb_pro);
 		pnl_north2.add(lb_size);
 		pnl_north2.add(cb_sizeS);
 		pnl_north2.add(cb_sizeM);
 		pnl_north2.add(cb_sizeL);
-		pnl_north2.add(lb_blank2);
-		pnl_north2.add(cb_pro);
 
 		
 
@@ -491,6 +500,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 	
 			
 			JOptionPane.showMessageDialog(null, "상품등록이 완료되었습니다.", "상품등록 완료", JOptionPane.PLAIN_MESSAGE);
+			System.out.println(size);
 			this.setDefaultCloseOperation(3);
 			setVisible(false);
 			Table_model.setRowCount(0);
@@ -549,33 +559,41 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 		if (source == cb_sizeS) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
-				size = size.replace("S(90),", "");
-				System.out.println(size);
-
+				k = k - 1;
+				System.out.println(k);
 			} else {
-				size = size + "S(90),";
-				System.out.println(size);
+				k = k + 1;
+				System.out.println(k);
 			}
 		}
 		if (source == cb_sizeM) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
-				size = size.replace("M(95),", "");
-				System.out.println(size);
+				k = k - 2;
+				System.out.println(k);
 			} else {
-				size = size + "M(95),";
-				System.out.println(size);
+				k = k + 2;
+				System.out.println(k);
 			}
 		}
 		if (source == cb_sizeL) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
-				size = size.replace("L(100)", "");
-				System.out.println(size);
+				k = k - 4;
+				System.out.println(k);
 			} else {
-				size = size + "L(100)";
-				System.out.println(size);
+				k = k + 4;
+				System.out.println(k);
 			}
 		}
-
+		switch(k) {
+		case 1 : size = "S(90)"; break;
+		case 2 : size = "M(95)"; break;
+		case 3 : size = "S(90), M(95)"; break;
+		case 4 : size = "L(100)"; break;
+		case 5 : size = "S(90), L(100)"; break;
+		case 6 : size = "M(95), L(100)"; break;
+		case 7 : size = "S(90), M(95), L(100)"; break;
+		}
 	}
 
 }
+
