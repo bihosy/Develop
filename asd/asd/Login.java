@@ -292,13 +292,13 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 		// TODO Auto-generated method stub
 
 		if (e.getSource() == lb_Join) {
-			new Join();
+			new Join(null);
 		}
 		if (e.getSource() == lb_pwSearch) {
-			new pwSearch();
+			new pwSearch(null);
 		}
 		if (e.getSource() == lb_idSearch) {
-			new idSearch();
+			new idSearch(null);
 		}
 	}
 }

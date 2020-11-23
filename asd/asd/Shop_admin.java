@@ -126,11 +126,20 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 	JScrollPane sp_pnl, sp_pnl2;
 
 	Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+	
+	Font font = new Font("¸¼Àº °íµñ",Font.PLAIN,15);
+	Font font2 = new Font("¸¼Àº °íµñ",Font.BOLD,17);
 
 	public Shop_admin() {
+		
+		
+		
 
 		pnl.setBackground(Color.WHITE);
-		pnl_btn.setBackground(Color.WHITE);
+		
+		Color color = new Color(0,34,102);
+		pnl_btn.setBackground(color);
+		
 
 		// --------DB Å×ÀÌºí °ü·Ã --------//
 		Table_model = new DefaultTableModel(contents, header);
@@ -261,9 +270,17 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			btn_menu[j] = new JButton(str_btn_name[j]);
 			btn_menu[j].addActionListener(this);
 			btn_menu[j].setCursor(cursor);
+			btn_menu[j].setBackground(color);
+			btn_menu[j].setBorderPainted(false);
+			btn_menu[j].setForeground(Color.WHITE);
 			pnl_btn.add(btn_menu[j]);
 
 		}
+		
+		btn_menu[0].setFont(font2);
+		btn_menu[1].setFont(font2);
+		btn_menu[2].setFont(font2);
+		btn_menu[3].setFont(font);
 
 		for (int i = 0; i < Table_model.getRowCount(); i++) {
 
@@ -380,6 +397,11 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		if (e.getSource() == btn_menu[0]) {
+			
+			btn_menu[0].setFont(font2);
+			btn_menu[1].setFont(font);
+			btn_menu[2].setFont(font);
+			btn_menu[3].setFont(font);
 
 			selnum = 1;
 			pnl_menu.removeAll();
@@ -478,6 +500,12 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		else if (e.getSource() == btn_menu[1]) {
+			
+			btn_menu[0].setFont(font);
+			btn_menu[1].setFont(font2);
+			btn_menu[2].setFont(font);
+			btn_menu[3].setFont(font);
+			
 			selnum = 2;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
@@ -573,6 +601,14 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		else if (e.getSource() == btn_menu[2]) {
+			
+			
+			btn_menu[0].setFont(font);
+			btn_menu[1].setFont(font);
+			btn_menu[2].setFont(font2);
+			btn_menu[3].setFont(font);
+			
+			
 			selnum = 3;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
@@ -672,6 +708,14 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		else if (e.getSource() == btn_menu[3]) {
+			
+			
+			btn_menu[0].setFont(font);
+			btn_menu[1].setFont(font);
+			btn_menu[2].setFont(font);
+			btn_menu[3].setFont(font2);
+			
+			
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
@@ -916,6 +960,12 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		if (e.getSource() == lb_Image2) {
+			
+			btn_menu[0].setFont(font2);
+			btn_menu[1].setFont(font2);
+			btn_menu[2].setFont(font2);
+			btn_menu[3].setFont(font);
+			
 			selnum = 0;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();

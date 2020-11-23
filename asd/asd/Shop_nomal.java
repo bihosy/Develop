@@ -134,6 +134,9 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	Image resizeImage3 = null;
 
 	Font WC_Font = new Font("돋움", Font.BOLD, 15);
+	Font font = new Font("맑은 고딕",Font.PLAIN,15);
+	Font font2 = new Font("맑은 고딕",Font.BOLD,17);
+	
 	JScrollPane sp_pnl, sp_pnl2;
 
 	Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
@@ -143,7 +146,8 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		// pnl_Basket_main.setLayout(null);
 		buybuy.addActionListener(this);
 		pnl.setBackground(Color.WHITE);
-		pnl_btn.setBackground(Color.WHITE);
+		Color color = new Color(0,34,102);
+		pnl_btn.setBackground(color);
 		deldel.addActionListener(this);
 
 		// --------DB 테이블 관련 --------//
@@ -282,9 +286,16 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			btn_menu[j] = new JButton(str_btn_name[j]);
 			btn_menu[j].addActionListener(this);
 			btn_menu[j].setCursor(cursor);
+			btn_menu[j].setBackground(color);
+			btn_menu[j].setBorderPainted(false);
+			btn_menu[j].setForeground(Color.WHITE);
 			pnl_btn.add(btn_menu[j]);
 
 		}
+		btn_menu[0].setFont(font2);
+		btn_menu[1].setFont(font2);
+		btn_menu[2].setFont(font2);
+		btn_menu[3].setFont(font);
 
 		for (int i = 0; i < Table_model.getRowCount(); i++) {
 
@@ -388,6 +399,11 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		// TODO Auto-generated method stub
 
 		if (e.getSource() == btn_menu[0]) {
+			
+			btn_menu[0].setFont(font2);
+			btn_menu[1].setFont(font);
+			btn_menu[2].setFont(font);
+			btn_menu[3].setFont(font);
 
 			selnum = 1;
 			pnl_menu.removeAll();
@@ -484,6 +500,12 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		}
 
 		else if (e.getSource() == btn_menu[1]) {
+			
+			btn_menu[0].setFont(font);
+			btn_menu[1].setFont(font2);
+			btn_menu[2].setFont(font);
+			btn_menu[3].setFont(font);
+			
 			selnum = 2;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
@@ -577,6 +599,12 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		}
 
 		else if (e.getSource() == btn_menu[2]) {
+			
+			btn_menu[0].setFont(font);
+			btn_menu[1].setFont(font);
+			btn_menu[2].setFont(font2);
+			btn_menu[3].setFont(font);
+			
 			selnum = 3;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
@@ -674,6 +702,11 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		}
 
 		else if (e.getSource() == btn_menu[3]) {
+			
+			btn_menu[0].setFont(font);
+			btn_menu[1].setFont(font);
+			btn_menu[2].setFont(font);
+			btn_menu[3].setFont(font2);
 
 			// 장바구니 변수 //
 			int bas_count = pro_show.cc; // bas_count 숫자에 따라 장바구니에 만들어지는 갯수가 달라짐
@@ -1042,6 +1075,13 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	public void mouseClicked(MouseEvent e) {
 
 		if (e.getSource() == lb_Image2) {
+			
+			
+			btn_menu[0].setFont(font2);
+			btn_menu[1].setFont(font2);
+			btn_menu[2].setFont(font2);
+			btn_menu[3].setFont(font);
+			
 			selnum = 0;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();

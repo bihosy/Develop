@@ -9,7 +9,7 @@ import javax.imageio.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-public class pwChan extends JFrame implements ActionListener {
+public class pwChan extends JDialog implements ActionListener {
 
 	// --------DB 테이블 관련 --------//
 	String header[] = { "ID", "PW", "이름", "성별", "생년월일", "휴대폰", "주소", "권한" };
@@ -44,7 +44,8 @@ public class pwChan extends JFrame implements ActionListener {
 	BufferedImage bi;
 	JPanel P;
 
-	public pwChan() {
+	public pwChan(Login lg) {
+		super(lg,true);
 
 		// --------DB 테이블 관련 --------//
 		Table_model = new DefaultTableModel(contents, header);
@@ -163,7 +164,7 @@ public class pwChan extends JFrame implements ActionListener {
 				}
 			}
 			this.setVisible(false);
-			this.setDefaultCloseOperation(3);
+			this.setDefaultCloseOperation(1);
 			
 			JOptionPane.showMessageDialog(this, "비밀번호가 성공적으로 변경되었습니다.", "비밀번호 찾기", JOptionPane.PLAIN_MESSAGE);
 			
@@ -176,6 +177,6 @@ public class pwChan extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new pwChan();
+		new pwChan(null);
 	}
 }

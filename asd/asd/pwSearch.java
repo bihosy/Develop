@@ -20,6 +20,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-public class pwSearch extends JFrame implements ActionListener {
+public class pwSearch extends JDialog implements ActionListener {
 
 	// --------DB 테이블 관련 --------//
 	String header[] = { "ID", "PW", "이름", "성별", "생년월일", "휴대폰", "주소", "권한" };
@@ -85,7 +86,8 @@ public class pwSearch extends JFrame implements ActionListener {
 	private SimpleDateFormat dateformatter = new SimpleDateFormat(datepattern);
 	//-----------------------달력생성----------------------//
 
-	public pwSearch() {
+	public pwSearch(Login lg) {
+		super(lg,true);
 
 		// --------DB 테이블 관련 --------//
 		Table_model = new DefaultTableModel(contents, header);
@@ -222,8 +224,10 @@ public class pwSearch extends JFrame implements ActionListener {
 				System.out.println(Table_model.getValueAt(k, 1));
 				i = 1;
 				pwChan.pwChanRow = k;
-				new pwChan();
+				new pwChan(null);
 				Table_model.setRowCount(0);
+				this.setVisible(false);
+				this.setDefaultCloseOperation(1);
 				break;
 
 			}
@@ -232,13 +236,13 @@ public class pwSearch extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "해당 계정이 존재하지 않습니다.", "비밀번호 찾기 오류", JOptionPane.ERROR_MESSAGE);
 		}
 		this.setVisible(false);
-		this.setDefaultCloseOperation(3);
+		this.setDefaultCloseOperation(1);
 
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new pwSearch();
+		new pwSearch(null);
 	}
 
 }

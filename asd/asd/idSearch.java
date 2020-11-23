@@ -11,11 +11,12 @@ import javax.imageio.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import jdk.nashorn.internal.scripts.JD;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-public class idSearch extends JFrame implements ActionListener {
+public class idSearch extends JDialog implements ActionListener {
 
 	// --------DB 테이블 관련 --------//
 	String header[] = { "ID", "PW", "이름", "성별", "생년월일", "휴대폰", "주소", "권한" };
@@ -66,7 +67,8 @@ public class idSearch extends JFrame implements ActionListener {
 	//-----------------------달력생성----------------------//
 
 	
-	public idSearch() {
+	public idSearch(Login lg) {
+		super(lg, true);
 
 		// --------DB 테이블 관련 --------//
 		Table_model = new DefaultTableModel(contents, header);
@@ -192,7 +194,7 @@ public class idSearch extends JFrame implements ActionListener {
 			String phone = cb_Phone1.getSelectedItem() + "-" + tf_Phone2.getText() + "-" + tf_Phone3.getText();
 			if (Table_model.getValueAt(k, 2).equals(name) && Table_model.getValueAt(k, 5).equals(phone) && Table_model.getValueAt(k,  4).equals(YMD)) {
 				
-				this.setDefaultCloseOperation(3);
+				this.setDefaultCloseOperation(1);
 				this.setVisible(false);				
 				
 				JOptionPane.showMessageDialog(this, name + "님의 아이디는 " + Table_model.getValueAt(k, 0) + " 입니다.", "아이디 찾기", JOptionPane.PLAIN_MESSAGE);
@@ -210,7 +212,7 @@ public class idSearch extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new idSearch();
+		new idSearch(null);
 	}
 
 }

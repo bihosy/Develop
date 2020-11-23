@@ -29,6 +29,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,7 +48,7 @@ import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-public class Join extends JFrame implements ActionListener, KeyListener {
+public class Join extends JDialog implements ActionListener, KeyListener {
 	//--------DB 테이블 관련 --------//
 	String header[] = { "ID", "PW", "이름", "성별", "생년월일", "휴대폰", "주소", "권한" };
 	String contents[][] = {};
@@ -114,7 +115,8 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 	
 	//----------------파일 리드라이트-----------//
 
-	public Join(){
+	public Join(Login lg){
+		super(lg, true);
 		
 		try {
 		    background = ImageIO.read(new File("f.jpg"));
@@ -288,8 +290,9 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 
 		this.setTitle("회원가입");
 		this.setSize(480, 900);
-		this.setVisible(true);
 		setLocationRelativeTo(null);
+		this.setVisible(true);
+		
 		this.setResizable(false);
 		
 	}
@@ -387,7 +390,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 					}
 				}
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.", "회원가입 완료", JOptionPane.PLAIN_MESSAGE);
-				this.setDefaultCloseOperation(3);
+				this.setDefaultCloseOperation(1);
 				setVisible(false);
 				Table_model.setRowCount(0);
 
@@ -416,7 +419,7 @@ public class Join extends JFrame implements ActionListener, KeyListener {
 	
 
 	public static void main(String args[]) {
-		new Join();
+		new Join(null);
 	}
 
 	@Override
