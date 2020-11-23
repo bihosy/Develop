@@ -278,10 +278,10 @@ public class paymentTotal extends JFrame implements ActionListener{
 			tf9.setText("");
 			tf10.setText("");
 		}
-		
-		
+
+		}
 		
 		
 	}
 
-}
+

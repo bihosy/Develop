@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -36,7 +38,7 @@ import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-public class Write extends JFrame implements ActionListener, MouseListener, ItemListener {
+public class Write extends JFrame implements ActionListener, MouseListener, ItemListener, KeyListener {
 
 	// --------DB 테이블 관련 --------//
 	String header[] = { "상품번호", "사진경로", "상품명", "가격", "사이즈","내용" };
@@ -125,12 +127,12 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 				String[] str = l.split("/");
 
-				System.out.print(str[0] + "/");
+				/*System.out.print(str[0] + "/");
 				System.out.print(str[1] + "/");
 				System.out.print(str[2] + "/");
 				System.out.print(str[3] + "/");
 				System.out.print(str[4] + "/");
-				System.out.println(str[5]);
+				System.out.println(str[5]);*/
 
 				Table_model.addRow(str);
 				idx = Integer.parseInt(str[0]) + 1;
@@ -140,12 +142,12 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 				String[] str = l.split("/");
 
-				System.out.print(str[0] + "/");
+				/*System.out.print(str[0] + "/");
 				System.out.print(str[1] + "/");
 				System.out.print(str[2] + "/");
 				System.out.print(str[3] + "/");
 				System.out.print(str[4] + "/");
-				System.out.println(str[5]);
+				System.out.println(str[5]);*/
 
 				top_model.addRow(str);
 
@@ -155,12 +157,12 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 				String[] str = l.split("/");
 
-				System.out.print(str[0] + "/");
+				/*System.out.print(str[0] + "/");
 				System.out.print(str[1] + "/");
 				System.out.print(str[2] + "/");
 				System.out.print(str[3] + "/");
 				System.out.print(str[4] + "/");
-				System.out.println(str[5]);
+				System.out.println(str[5]);*/
 
 				pants_model.addRow(str);
 
@@ -170,12 +172,12 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 				String[] str = l.split("/");
 
-				System.out.print(str[0] + "/");
+				/*System.out.print(str[0] + "/");
 				System.out.print(str[1] + "/");
 				System.out.print(str[2] + "/");
 				System.out.print(str[3] + "/");
 				System.out.print(str[4] + "/");
-				System.out.println(str[5]);
+				System.out.println(str[5]);*/
 
 				shoes_model.addRow(str);
 
@@ -258,8 +260,8 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		btn_finish = new JButton("등록");
 		btn_finish.setPreferredSize(new Dimension(90, 30));
 		btn_finish.setBackground(color);
-		btn_preview = new JButton("미리 보기");
-
+		
+		//btn_finish.setEnabled(false);
 		pnl_north1.add(lb_image);
 
 		pnl_north2.add(lb_title);
@@ -285,10 +287,22 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		pnl_north.add(pnl_north1);
 		pnl_north.add(pnl_north2);
 		pnl_middle.add(ta_contents);
+		
 		//pnl_middle.add(tb_Pro);
 		
-		pnl_south.add(btn_preview);
+		//pnl_south.add(btn_preview);
 		pnl_south.add(btn_finish);
+		
+		pnl_north.setBackground(Color.white);
+		pnl_middle.setBackground(Color.white);
+		pnl_north2.setBackground(Color.white);
+		pnl_south.setBackground(Color.white);
+		//pnl_north1.setBackground(color.black);
+		cb_sizeL.setBackground(color.white);
+		cb_sizeS.setBackground(color.white);
+		cb_sizeM.setBackground(color.white);
+		//cb_pro.setBackground(color.white);
+		fd_price.addKeyListener(this);
 
 		this.add(pnl_north, "North");
 		this.add(pnl_middle, "Center");
@@ -308,8 +322,37 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		String ta_chi = ta_contents.getText();
 		ta_chi = ta_chi.replace("\n","<br>");
 		
-
+/*		if(fd_title.getText().equals("") && fd_price.getText().equals("")
+				&& ta_contents.getText().equals("")) {
+			btn_finish.setEnabled(false);
+		}
+			else {
+				btn_finish.setEnabled(true);
+			}*/
 		if (e.getSource() == btn_finish) {
+			
+			if(fd_title.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "상품명이 입력되지 않았습니다.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			else if(fd_price.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "가격이 입력되지 않았습니다.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			else if (cb_sizeL.isSelected()==false&&cb_sizeM.isSelected()==false&&cb_sizeS.isSelected()==false){
+				JOptionPane.showMessageDialog(null, "사이즈가 선택되지 않았습니다.", "Error", JOptionPane.ERROR_MESSAGE);
+
+			}
+
+			else if(ta_contents.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "설명이 입력되지 않았습니다.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+	
+			
+			
+			
+			
+			else{
+			
 			Pro_str[0] = idx + "";
 			Pro_str[1] = img_gr;
 			Pro_str[2] = fd_title.getText();
@@ -505,7 +548,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 			setVisible(false);
 			Table_model.setRowCount(0);
 			new Shop_admin();
-
+			}
 		}
 	}
 
@@ -560,28 +603,25 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		if (source == cb_sizeS) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
 				k = k - 1;
-				System.out.println(k);
+				
+				
 			} else {
 				k = k + 1;
-				System.out.println(k);
+				
 			}
 		}
 		if (source == cb_sizeM) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
 				k = k - 2;
-				System.out.println(k);
 			} else {
 				k = k + 2;
-				System.out.println(k);
 			}
 		}
 		if (source == cb_sizeL) {
 			if (e.getStateChange() == ItemEvent.DESELECTED) {
 				k = k - 4;
-				System.out.println(k);
 			} else {
 				k = k + 4;
-				System.out.println(k);
 			}
 		}
 		switch(k) {
@@ -593,6 +633,28 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		case 6 : size = "M(95), L(100)"; break;
 		case 7 : size = "S(90), M(95), L(100)"; break;
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		 char caracter = e.getKeyChar();
+         if (((caracter < '0') || (caracter > '9'))
+                 && (caracter != '\b')) {
+             e.consume();
+         }
 	}
 
 }

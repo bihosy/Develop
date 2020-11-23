@@ -199,7 +199,8 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 
 				if (Table_model.getValueAt(k, 0).equals(id) && Table_model.getValueAt(k, 1).equals(pw)) {
 					if (Table_model.getValueAt(k, 7).equals("true")) {
-						System.out.println("어서오세요 관리자님");
+						//System.out.println("어서오세요 관리자님");
+						JOptionPane.showMessageDialog(this, "어서오세요 관리자님");
 						name=Table_model.getValueAt(k, 2).toString();
 						i = 1;
 						Table_model.setRowCount(0);
@@ -208,7 +209,8 @@ public class Login extends JFrame implements ActionListener, MouseListener {
 						new Shop_admin();
 						break;
 					} else {
-						System.out.println("성공적으로 로그인 되었습니다.");
+						//System.out.println("성공적으로 로그인 되었습니다.");
+						JOptionPane.showMessageDialog(this, "성공적으로 로그인 되었습니다");
 						Shop_nomal.userid=Table_model.getValueAt(k, 0).toString();
 						name=Table_model.getValueAt(k, 2).toString();
 						i = 1;

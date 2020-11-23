@@ -94,22 +94,22 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	JPanel pnl_info = new JPanel();
 	JButton buybuy = new JButton("구매하기");
 	JButton deldel = new JButton("삭제하기");
-	JPanel[] pnl_arry = new JPanel[9];
-	JCheckBox[] cb_del = new JCheckBox[9];
+	JPanel[] pnl_arry = new JPanel[99];
+	JCheckBox[] cb_del = new JCheckBox[99];
 
-	JPanel[] pnl_arry2 = new JPanel[9];
-	JPanel[] pnl_arry3 = new JPanel[9]; // 상품정보
-	JPanel[] pnl_arry4 = new JPanel[9]; // 상품정보 내용
+	JPanel[] pnl_arry2 = new JPanel[99];
+	JPanel[] pnl_arry3 = new JPanel[99]; // 상품정보
+	JPanel[] pnl_arry4 = new JPanel[99]; // 상품정보 내용
 
-	JLabel[] lb_name = new JLabel[9];
-	JLabel[] lb_size = new JLabel[9];
-	JLabel[] lb_price = new JLabel[9];
-	JLabel[] lb_jumun = new JLabel[9];
-	JLabel[] lb_1day = new JLabel[9];
-	JLabel[] lb_image = new JLabel[9];
-	JLabel[] lb_name_arry = new JLabel[9];
-	JLabel[] lb_size_arry = new JLabel[9];
-	JLabel[] lb_price_arry = new JLabel[9];
+	JLabel[] lb_name = new JLabel[99];
+	JLabel[] lb_size = new JLabel[99];
+	JLabel[] lb_price = new JLabel[99];
+	JLabel[] lb_jumun = new JLabel[99];
+	JLabel[] lb_1day = new JLabel[99];
+	JLabel[] lb_image = new JLabel[99];
+	JLabel[] lb_name_arry = new JLabel[99];
+	JLabel[] lb_size_arry = new JLabel[99];
+	JLabel[] lb_price_arry = new JLabel[99];
 	JLabel lb_top_logo = new JLabel("이미지"); // 팀로고 or 쇼핑몰 로고
 	JLabel lb_top_info1 = new JLabel("아이디 : "); // 가입할때 입력한 아이디
 	JLabel lb_top_info2 = new JLabel("등급 : "); // admin or user
@@ -134,19 +134,20 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	Image resizeImage3 = null;
 
 	Font WC_Font = new Font("돋움", Font.BOLD, 15);
-	Font font = new Font("맑은 고딕",Font.PLAIN,15);
-	Font font2 = new Font("맑은 고딕",Font.BOLD,17);
-	
+	Font font = new Font("맑은 고딕", Font.PLAIN, 15);
+	Font font2 = new Font("맑은 고딕", Font.BOLD, 17);
+
 	JScrollPane sp_pnl, sp_pnl2;
 
 	Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+	Color color = new Color(0, 34, 102);
 
 	public Shop_nomal() {
 		pnl_Basket_main.setLayout(new BoxLayout(pnl_Basket_main, BoxLayout.Y_AXIS));
 		// pnl_Basket_main.setLayout(null);
 		buybuy.addActionListener(this);
 		pnl.setBackground(Color.WHITE);
-		Color color = new Color(0,34,102);
+
 		pnl_btn.setBackground(color);
 		deldel.addActionListener(this);
 
@@ -266,6 +267,12 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		lb_WC.setBounds(850, 70, 200, 25);
 		lb_WC.setFont(WC_Font);
 
+		buybuy.setBackground(color);
+		buybuy.setForeground(Color.WHITE);
+		deldel.setBackground(color);
+		deldel.setForeground(Color.WHITE);
+		lb_Basket_gunprice.setForeground(Color.white);
+
 		// lb_Image
 
 		pnl_logoinfo.add(lb_Image2);
@@ -297,7 +304,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		btn_menu[2].setFont(font2);
 		btn_menu[3].setFont(font);
 
-		for (int i = 0; i < Table_model.getRowCount(); i++) {
+		for (int i = 1; i < Table_model.getRowCount(); i++) {
 
 			img_gr = Table_model.getValueAt(i, 1).toString();
 
@@ -399,7 +406,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		// TODO Auto-generated method stub
 
 		if (e.getSource() == btn_menu[0]) {
-			
+
 			btn_menu[0].setFont(font2);
 			btn_menu[1].setFont(font);
 			btn_menu[2].setFont(font);
@@ -409,7 +416,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
-			for (int i = 0; i < top_model.getRowCount(); i++) {
+			for (int i = 1; i < top_model.getRowCount(); i++) {
 
 				img_gr = top_model.getValueAt(i, 1).toString();
 
@@ -500,17 +507,17 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		}
 
 		else if (e.getSource() == btn_menu[1]) {
-			
+
 			btn_menu[0].setFont(font);
 			btn_menu[1].setFont(font2);
 			btn_menu[2].setFont(font);
 			btn_menu[3].setFont(font);
-			
+
 			selnum = 2;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
-			for (int i = 0; i < pants_model.getRowCount(); i++) {
+			for (int i = 1; i < pants_model.getRowCount(); i++) {
 
 				img_gr = pants_model.getValueAt(i, 1).toString();
 
@@ -599,18 +606,18 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		}
 
 		else if (e.getSource() == btn_menu[2]) {
-			
+
 			btn_menu[0].setFont(font);
 			btn_menu[1].setFont(font);
 			btn_menu[2].setFont(font2);
 			btn_menu[3].setFont(font);
-			
+
 			selnum = 3;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
 
-			for (int i = 0; i < shoes_model.getRowCount(); i++) {
+			for (int i = 1; i < shoes_model.getRowCount(); i++) {
 
 				img_gr = shoes_model.getValueAt(i, 1).toString();
 
@@ -702,7 +709,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 		}
 
 		else if (e.getSource() == btn_menu[3]) {
-			
+
 			btn_menu[0].setFont(font);
 			btn_menu[1].setFont(font);
 			btn_menu[2].setFont(font);
@@ -717,7 +724,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			// 생성현재는 2로
 			// 주었음 장바구니에 넣은 상품의갯수를 받아오면됨
 
-			pnl_Basket_buy.setBackground(Color.gray);
+			pnl_Basket_buy.setBackground(color);
 			JScrollPane sp_Basket_pnl;// menu에 Center로 붙어있는 패널
 
 			// 장바구니 패널
@@ -818,7 +825,9 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 				cb_del[Bas_i] = new JCheckBox();
 				cb_del[Bas_i].addActionListener(this);
 
-				pnl_Basket_product_description[Bas_i].add(cb_del[Bas_i]);
+				pnl_Basket_shopbasket[Bas_i].add(cb_del[Bas_i]);
+				cb_del[Bas_i].setBounds(900, 30, 100, 100);
+				cb_del[Bas_i].setBackground(Color.white);
 				pnl_Basket_shopbasket[Bas_i].add(lb_Basket_shopbasket_image[Bas_i]);
 				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_title[Bas_i]);
 				pnl_Basket_shopbasket[Bas_i].add(pnl_Basket_product_description[Bas_i]);
@@ -843,7 +852,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
-			lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
+			lb_Basket_gunprice.setText("총 금액은 " + Integer.toString(pro_show.price) + "원 입니다.");
 			pnl_Basket_buy.add(lb_Basket_gunprice);
 			pnl_Basket_buy.add(buybuy);
 			pnl_Basket_buy.add(deldel);
@@ -859,46 +868,52 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 
 		if (e.getSource() == buybuy) {
 
-			new paymentTotal();
-			if (pro_show.cc > 1) {
-				paymentTotal.lb_Requiredinput.setText(bas_name[0] + " 외 " + (pro_show.cc - 1) + "개");
+			if (pro_show.cc < 1) {
+				JOptionPane.showMessageDialog(null, "장바구니에 상품이 없습니다.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-			if (pro_show.cc == 1) {
-				paymentTotal.lb_Requiredinput.setText(bas_name[0]);
-			}
-			for (int memi = 0; memi < mem_model.getRowCount(); memi++) {
-
-				String sksnrl = mem_model.getValueAt(memi, 6).toString();
-				String vhs = mem_model.getValueAt(memi, 5).toString();
-
-				String[] adr = new String[2];
-				String[] phnum = new String[3];
-				adr = sksnrl.split("=");
-				phnum = vhs.split("-");
-
-				if (userid.equals(mem_model.getValueAt(memi, 0).toString())) {
-					CusInfo.fd_reciever.setText(mem_model.getValueAt(memi, 2).toString());
-					CusInfo.fd_address2.setText(adr[0]);
-					CusInfo.fd_address3.setText(adr[1]);
-					CusInfo.fd_phone.setText(phnum[1]);
-					CusInfo.fd_phone2.setText(phnum[2]);
-
-					if (phnum[0].equals("010")) {
-						CusInfo.cb_phone.setSelectedIndex(0);
-					}
-					if (phnum[0].equals("011")) {
-						CusInfo.cb_phone.setSelectedIndex(1);
-					}
-					if (phnum[0].equals("016")) {
-						CusInfo.cb_phone.setSelectedIndex(2);
-					}
-					if (phnum[0].equals("017")) {
-						CusInfo.cb_phone.setSelectedIndex(3);
-					}
-
+			else{
+				new paymentTotal();
+				if (pro_show.cc > 1) {
+					paymentTotal.lb_Requiredinput.setText(bas_name[0] + " 외 " + (pro_show.cc - 1) + "개");
 				}
-			}
+				if (pro_show.cc == 1) {
+					paymentTotal.lb_Requiredinput.setText(bas_name[0]);
+				}
+				for (int memi = 0; memi < mem_model.getRowCount(); memi++) {
 
+					String sksnrl = mem_model.getValueAt(memi, 6).toString();
+					String vhs = mem_model.getValueAt(memi, 5).toString();
+
+					String[] adr = new String[2];
+					String[] phnum = new String[3];
+					adr = sksnrl.split("=");
+					phnum = vhs.split("-");
+
+					if (userid.equals(mem_model.getValueAt(memi, 0).toString())) {
+						CusInfo.fd_reciever.setText(mem_model.getValueAt(memi, 2).toString());
+						CusInfo.fd_address2.setText(adr[0]);
+						CusInfo.fd_address3.setText(adr[1]);
+						CusInfo.fd_phone.setText(phnum[1]);
+						CusInfo.fd_phone2.setText(phnum[2]);
+
+						if (phnum[0].equals("010")) {
+							CusInfo.cb_phone.setSelectedIndex(0);
+						}
+						if (phnum[0].equals("011")) {
+							CusInfo.cb_phone.setSelectedIndex(1);
+						}
+						if (phnum[0].equals("016")) {
+							CusInfo.cb_phone.setSelectedIndex(2);
+						}
+						if (phnum[0].equals("017")) {
+							CusInfo.cb_phone.setSelectedIndex(3);
+						}
+
+					}
+				}
+
+			}
+			
 		}
 		int maprice = 0;
 		if (e.getSource() == deldel) {
@@ -910,7 +925,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 					String manumnum = lb_Basket_price[sel].getText().replace(" 원", "");
 					maprice = Integer.parseInt(manumnum);
 					pro_show.price = pro_show.price - maprice;
-					lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
+					lb_Basket_gunprice.setText("총 금액은 " + Integer.toString(pro_show.price) + "원 입니다.");
 
 					pnl_Basket_shopbasket[sel].removeAll();
 
@@ -918,7 +933,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 				}
 			}
 
-			//System.out.println("    " + pro_show.cc);
+			// System.out.println(" " + pro_show.cc);
 
 			// 장바구니 변수 //
 			int bas_count = pro_show.cc; // bas_count 숫자에 따라 장바구니에 만들어지는 갯수가 달라짐
@@ -929,7 +944,7 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 			// 생성현재는 2로
 			// 주었음 장바구니에 넣은 상품의갯수를 받아오면됨
 
-			pnl_Basket_buy.setBackground(Color.gray);
+			pnl_Basket_buy.setBackground(color);
 			JScrollPane sp_Basket_pnl;// menu에 Center로 붙어있는 패널
 
 			// 장바구니 패널
@@ -1027,8 +1042,10 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 				lb_Basket_size[Bas_i].setFont(font);
 				lb_Basket_price[Bas_i].setFont(font);
 
-				cb_del[Bas_i] = new JCheckBox();
-				cb_del[Bas_i].addActionListener(this);
+				/*
+				 * cb_del[Bas_i] = new JCheckBox();
+				 * cb_del[Bas_i].addActionListener(this);
+				 */
 
 				pnl_Basket_product_description[Bas_i].add(cb_del[Bas_i]);
 				pnl_Basket_shopbasket[Bas_i].add(lb_Basket_shopbasket_image[Bas_i]);
@@ -1055,7 +1072,8 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 
 			pnl_menu.add(sp_pnl, "Center");
 			pnl_menu.add(pnl_btn, "North");
-			lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
+			// lb_Basket_gunprice.setText(Integer.toString(pro_show.price));
+			lb_Basket_gunprice.setText("총 금액은 " + Integer.toString(pro_show.price) + "원 입니다.");
 			pnl_Basket_buy.add(lb_Basket_gunprice);
 			pnl_Basket_buy.add(buybuy);
 			pnl_Basket_buy.add(deldel);
@@ -1075,19 +1093,18 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 	public void mouseClicked(MouseEvent e) {
 
 		if (e.getSource() == lb_Image2) {
-			
-			
+
 			btn_menu[0].setFont(font2);
 			btn_menu[1].setFont(font2);
 			btn_menu[2].setFont(font2);
 			btn_menu[3].setFont(font);
-			
+
 			selnum = 0;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
 
-			for (int i = 0; i < Table_model.getRowCount(); i++) {
+			for (int i = 1; i < Table_model.getRowCount(); i++) {
 
 				img_gr = Table_model.getValueAt(i, 1).toString();
 
@@ -1205,7 +1222,6 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 					pro_show.Image[pro_show.cc] = resizeImage3;
 
 					get_price = this.lb_price_arry[i].getText();
-				
 
 					str = top_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1245,7 +1261,6 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 					pro_show.Image[pro_show.cc] = resizeImage3;
 
 					get_price = this.lb_price_arry[i].getText();
-					
 
 					str = pants_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1284,7 +1299,6 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 					pro_show.Image[pro_show.cc] = resizeImage3;
 
 					get_price = this.lb_price_arry[i].getText();
-					
 
 					str = shoes_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1323,7 +1337,6 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 					pro_show.Image[pro_show.cc] = resizeImage3;
 
 					get_price = this.lb_price_arry[i].getText();
-					
 
 					str = Table_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");
@@ -1360,8 +1373,6 @@ public class Shop_nomal extends JFrame implements ActionListener, MouseListener,
 					pro_show.Image[pro_show.cc] = resizeImage3;
 
 					get_price = this.lb_price_arry[i].getText();
-
-					
 
 					str = Table_model.getValueAt(i, 5).toString();
 					str = str.replace("<br>", "\n");

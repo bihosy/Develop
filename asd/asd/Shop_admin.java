@@ -84,28 +84,29 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 	JPanel pnl_image = new JPanel();
 	JPanel pnl_info = new JPanel();
 	JButton buybuy = new JButton("구매하기");
-	JPanel[] pnl_arry = new JPanel[9];
+	JPanel[] pnl_arry = new JPanel[99];
 
-	JPanel[] pnl_arry2 = new JPanel[9];
-	JPanel[] pnl_arry3 = new JPanel[9]; // 상품정보
-	JPanel[] pnl_arry4 = new JPanel[9]; // 상품정보 내용
+	JPanel[] pnl_arry2 = new JPanel[99];
+	JPanel[] pnl_arry3 = new JPanel[99]; // 상품정보
+	JPanel[] pnl_arry4 = new JPanel[99]; // 상품정보 내용
 
-	JLabel[] lb_name = new JLabel[9];
-	JLabel[] lb_size = new JLabel[9];
-	JLabel[] lb_price = new JLabel[9];
-	JLabel[] lb_jumun = new JLabel[9];
-	JLabel[] lb_1day = new JLabel[9];
-	JLabel[] lb_image = new JLabel[9];
-	JLabel[] lb_name_arry = new JLabel[9];
-	JLabel[] lb_size_arry = new JLabel[9];
-	JLabel[] lb_price_arry = new JLabel[9];
+	JLabel[] lb_name = new JLabel[99];
+	JLabel[] lb_size = new JLabel[99];
+	JLabel[] lb_price = new JLabel[99];
+	JLabel[] lb_jumun = new JLabel[99];
+	JLabel[] lb_1day = new JLabel[99];
+	JLabel[] lb_image = new JLabel[99];
+	JLabel[] lb_name_arry = new JLabel[99];
+	JLabel[] lb_size_arry = new JLabel[99];
+	JLabel[] lb_price_arry = new JLabel[99];
 	JLabel lb_top_logo = new JLabel("이미지"); // 팀로고 or 쇼핑몰 로고
 	JLabel lb_top_info1 = new JLabel("아이디 : "); // 가입할때 입력한 아이디
 	JLabel lb_top_info2 = new JLabel("등급 : "); // admin or user
 	JLabel lb_top_setinfo1 = new JLabel(" rozen"); // 임시로 rozen넣어놈 작업할땐 지우고 받아온
 													// 아이디를 여기 라벨에 붙이면됨
 	JLabel lb_top_setinfo2 = new JLabel("admin");// 임시로 admin넣어놈 작업할땐 지우고 받아온
-	JButton btn_write = new JButton("글쓰기"); // 아이디를 여기 라벨에 붙이면됨
+													// 아이디를 여기 라벨에 붙이면됨
+	JButton btn_write = new JButton("글쓰기");
 	JLabel lb_Image2; // 로고 들어갈 상단 라벨
 	JLabel lb_WC; // 상단 우측 라벨(WelCome!)
 
@@ -126,20 +127,16 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 	JScrollPane sp_pnl, sp_pnl2;
 
 	Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
-	
-	Font font = new Font("맑은 고딕",Font.PLAIN,15);
-	Font font2 = new Font("맑은 고딕",Font.BOLD,17);
+
+	Font font = new Font("맑은 고딕", Font.PLAIN, 15);
+	Font font2 = new Font("맑은 고딕", Font.BOLD, 17);
 
 	public Shop_admin() {
-		
-		
-		
 
 		pnl.setBackground(Color.WHITE);
-		
-		Color color = new Color(0,34,102);
+
+		Color color = new Color(0, 34, 102);
 		pnl_btn.setBackground(color);
-		
 
 		// --------DB 테이블 관련 --------//
 		Table_model = new DefaultTableModel(contents, header);
@@ -151,7 +148,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		tb_top = new JTable(top_model);
 		tb_pants = new JTable(pants_model);
 		tb_shoes = new JTable(shoes_model);
-		
+
 		tb_Pro.setRowHeight(25);
 		tb_top.setRowHeight(25);
 		tb_pants.setRowHeight(25);
@@ -276,7 +273,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			pnl_btn.add(btn_menu[j]);
 
 		}
-		
+
 		btn_menu[0].setFont(font2);
 		btn_menu[1].setFont(font2);
 		btn_menu[2].setFont(font2);
@@ -360,8 +357,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			pnl_main.add(pnl_arry[i]);
 
 		}
-		
-		
+
 		tb_pants.setEnabled(false);
 		tb_shoes.setEnabled(false);
 		tb_top.setEnabled(false);
@@ -397,7 +393,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		if (e.getSource() == btn_menu[0]) {
-			
+
 			btn_menu[0].setFont(font2);
 			btn_menu[1].setFont(font);
 			btn_menu[2].setFont(font);
@@ -500,12 +496,12 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		else if (e.getSource() == btn_menu[1]) {
-			
+
 			btn_menu[0].setFont(font);
 			btn_menu[1].setFont(font2);
 			btn_menu[2].setFont(font);
 			btn_menu[3].setFont(font);
-			
+
 			selnum = 2;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
@@ -601,14 +597,12 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		else if (e.getSource() == btn_menu[2]) {
-			
-			
+
 			btn_menu[0].setFont(font);
 			btn_menu[1].setFont(font);
 			btn_menu[2].setFont(font2);
 			btn_menu[3].setFont(font);
-			
-			
+
 			selnum = 3;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
@@ -708,14 +702,12 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		else if (e.getSource() == btn_menu[3]) {
-			
-			
+
 			btn_menu[0].setFont(font);
 			btn_menu[1].setFont(font);
 			btn_menu[2].setFont(font);
 			btn_menu[3].setFont(font2);
-			
-			
+
 			pnl_menu.removeAll();
 			pnl_main.removeAll();
 			sp_pnl.removeAll();
@@ -728,7 +720,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			lb_name[1] = new JLabel("상의");
 			lb_name[2] = new JLabel("하의");
 			lb_name[3] = new JLabel("신발");
-			
+
 			Font name_font = new Font("돋움", Font.BOLD, 18);
 			lb_name[0].setFont(name_font);
 			lb_name[1].setFont(name_font);
@@ -739,19 +731,19 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			JScrollPane sp_topdb = new JScrollPane(tb_top);
 			JScrollPane sp_pantsdb = new JScrollPane(tb_pants);
 			JScrollPane sp_shoesdb = new JScrollPane(tb_shoes);
-			
+
 			lb_name[0].setBounds(455, 10, 100, 25);
 			sp_prodb.setBounds(0, 60, 985, 140);
 			sp_prodb.getViewport().setBackground(Color.white);
-			
+
 			lb_name[1].setBounds(470, 210, 100, 25);
 			sp_topdb.setBounds(0, 260, 985, 140);
 			sp_topdb.getViewport().setBackground(Color.white);
-			
+
 			lb_name[2].setBounds(470, 410, 100, 25);
 			sp_pantsdb.setBounds(0, 460, 985, 140);
 			sp_pantsdb.getViewport().setBackground(Color.white);
-			
+
 			lb_name[3].setBounds(470, 610, 100, 25);
 			sp_shoesdb.setBounds(0, 660, 985, 140);
 			sp_shoesdb.getViewport().setBackground(Color.white);
@@ -777,176 +769,183 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 			System.out.println("3");
 		}
 		if (e.getSource() == btn_del) {
-			//
-			Table_model.removeRow(seltbnum);
-			for (int i = 0; i < top_model.getRowCount(); i++) {
-				if (Integer.parseInt((String) top_model.getValueAt(i, 0)) == pronum) {
-					top_model.removeRow(i);
-				}
-			}
-			for (int j = 0; j < pants_model.getRowCount(); j++) {
-				if (Integer.parseInt((String) pants_model.getValueAt(j, 0)) == pronum) {
-					pants_model.removeRow(j);
-				}
+
+			if (seltbnum == 0) {
+				System.out.println("Test 항목은 지울 수 없습니다.");
 			}
 
-			for (int k = 0; k < shoes_model.getRowCount(); k++) {
-				if (Integer.parseInt((String) shoes_model.getValueAt(k, 0)) == pronum) {
-					shoes_model.removeRow(k);
-				}
-			}
-		}
+			else {
 
-		try
-
-		{
-			fwtop = new FileWriter(topgr);
-			pwtop = new PrintWriter(fwtop);
-
-			for (int i = 0; i < tb_top.getRowCount(); i++) {
-				for (int j = 0; j < tb_top.getColumnCount(); j++) {
-
-					if (j == tb_top.getColumnCount() - 1) {
-						l = top_model.getValueAt(i, j).toString();
-						pwtop.print(l);
-
-					} else {
-						l = tb_top.getValueAt(i, j).toString();
-						pwtop.print(l);
-						pwtop.print("/");
-
+				Table_model.removeRow(seltbnum);
+				for (int i = 0; i < top_model.getRowCount(); i++) {
+					if (Integer.parseInt((String) top_model.getValueAt(i, 0)) == pronum) {
+						top_model.removeRow(i);
 					}
 				}
-				pwtop.println();
+				for (int j = 0; j < pants_model.getRowCount(); j++) {
+					if (Integer.parseInt((String) pants_model.getValueAt(j, 0)) == pronum) {
+						pants_model.removeRow(j);
+					}
+				}
+
+				for (int k = 0; k < shoes_model.getRowCount(); k++) {
+					if (Integer.parseInt((String) shoes_model.getValueAt(k, 0)) == pronum) {
+						shoes_model.removeRow(k);
+					}
+				}
 			}
 
-		}
+			try
 
-		catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} finally {
+			{
+				fwtop = new FileWriter(topgr);
+				pwtop = new PrintWriter(fwtop);
 
-			try {
-				fwtop.close();
-				pwtop.close();
-			} catch (IOException e2) {
+				for (int i = 0; i < tb_top.getRowCount(); i++) {
+					for (int j = 0; j < tb_top.getColumnCount(); j++) {
+
+						if (j == tb_top.getColumnCount() - 1) {
+							l = top_model.getValueAt(i, j).toString();
+							pwtop.print(l);
+
+						} else {
+							l = tb_top.getValueAt(i, j).toString();
+							pwtop.print(l);
+							pwtop.print("/");
+
+						}
+					}
+					pwtop.println();
+				}
+
+			}
+
+			catch (IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
-			}
-		}
+			} finally {
 
-		try {
-			fwpants = new FileWriter(pantsgr);
-			pwpants = new PrintWriter(fwpants);
-
-			for (int i = 0; i < tb_pants.getRowCount(); i++) {
-				for (int j = 0; j < tb_pants.getColumnCount(); j++) {
-
-					if (j == tb_pants.getColumnCount() - 1) {
-						l = pants_model.getValueAt(i, j).toString();
-						pwpants.print(l);
-
-					} else {
-						l = tb_pants.getValueAt(i, j).toString();
-						pwpants.print(l);
-						pwpants.print("/");
-
-					}
+				try {
+					fwtop.close();
+					pwtop.close();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
 				}
-				pwpants.println();
 			}
-
-		}
-
-		catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} finally {
 
 			try {
-				fwpants.close();
-				pwpants.close();
-			} catch (IOException e2) {
+				fwpants = new FileWriter(pantsgr);
+				pwpants = new PrintWriter(fwpants);
+
+				for (int i = 0; i < tb_pants.getRowCount(); i++) {
+					for (int j = 0; j < tb_pants.getColumnCount(); j++) {
+
+						if (j == tb_pants.getColumnCount() - 1) {
+							l = pants_model.getValueAt(i, j).toString();
+							pwpants.print(l);
+
+						} else {
+							l = tb_pants.getValueAt(i, j).toString();
+							pwpants.print(l);
+							pwpants.print("/");
+
+						}
+					}
+					pwpants.println();
+				}
+
+			}
+
+			catch (IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
-			}
-		}
+			} finally {
 
-		try {
-			fwshoes = new FileWriter(shoesgr);
-			pwshoes = new PrintWriter(fwshoes);
-
-			for (int i = 0; i < tb_shoes.getRowCount(); i++) {
-				for (int j = 0; j < tb_shoes.getColumnCount(); j++) {
-
-					if (j == tb_shoes.getColumnCount() - 1) {
-						l = shoes_model.getValueAt(i, j).toString();
-						pwshoes.print(l);
-
-					} else {
-						l = tb_shoes.getValueAt(i, j).toString();
-						pwshoes.print(l);
-						pwshoes.print("/");
-
-					}
+				try {
+					fwpants.close();
+					pwpants.close();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
 				}
-				pwshoes.println();
 			}
-
-		}
-
-		catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} finally {
 
 			try {
-				fwshoes.close();
-				pwshoes.close();
-			} catch (IOException e2) {
+				fwshoes = new FileWriter(shoesgr);
+				pwshoes = new PrintWriter(fwshoes);
+
+				for (int i = 0; i < tb_shoes.getRowCount(); i++) {
+					for (int j = 0; j < tb_shoes.getColumnCount(); j++) {
+
+						if (j == tb_shoes.getColumnCount() - 1) {
+							l = shoes_model.getValueAt(i, j).toString();
+							pwshoes.print(l);
+
+						} else {
+							l = tb_shoes.getValueAt(i, j).toString();
+							pwshoes.print(l);
+							pwshoes.print("/");
+
+						}
+					}
+					pwshoes.println();
+				}
+
+			}
+
+			catch (IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
-			}
-		}
+			} finally {
 
-		try {
-			fw = new FileWriter(gr);
-			pw = new PrintWriter(fw);
-
-			for (int i = 0; i < tb_Pro.getRowCount(); i++) {
-				for (int j = 0; j < tb_Pro.getColumnCount(); j++) {
-
-					if (j == tb_Pro.getColumnCount() - 1) {
-						l = Table_model.getValueAt(i, j).toString();
-						pw.print(l);
-
-					} else {
-						l = Table_model.getValueAt(i, j).toString();
-						pw.print(l);
-						pw.print("/");
-
-					}
+				try {
+					fwshoes.close();
+					pwshoes.close();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
 				}
-				pw.println();
 			}
-
-		}
-
-		catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} finally {
 
 			try {
-				fw.close();
-				pw.close();
-			} catch (IOException e1) {
+				fw = new FileWriter(gr);
+				pw = new PrintWriter(fw);
+
+				for (int i = 0; i < tb_Pro.getRowCount(); i++) {
+					for (int j = 0; j < tb_Pro.getColumnCount(); j++) {
+
+						if (j == tb_Pro.getColumnCount() - 1) {
+							l = Table_model.getValueAt(i, j).toString();
+							pw.print(l);
+
+						} else {
+							l = Table_model.getValueAt(i, j).toString();
+							pw.print(l);
+							pw.print("/");
+
+						}
+					}
+					pw.println();
+				}
+
+			}
+
+			catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
-		}
+			} finally {
 
+				try {
+					fw.close();
+					pw.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+		}
 	}
 
 	@Override
@@ -960,12 +959,12 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		}
 
 		if (e.getSource() == lb_Image2) {
-			
+
 			btn_menu[0].setFont(font2);
 			btn_menu[1].setFont(font2);
 			btn_menu[2].setFont(font2);
 			btn_menu[3].setFont(font);
-			
+
 			selnum = 0;
 			pnl_menu.removeAll();
 			pnl_main.removeAll();

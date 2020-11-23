@@ -1,6 +1,9 @@
 package asd;
 
 import javax.swing.*;
+
+import com.sun.javafx.embed.swing.Disposer;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -30,7 +33,7 @@ public class payment extends JPanel implements ActionListener {
 	
 	JCheckBox payCheck, accCheck, accCheck2; // 체크 후 결제버튼 활성화 , 에스크로 선택1,2
 	
-	JButton payBtn; // 결제하기 버튼
+	static JButton payBtn; // 결제하기 버튼
 	
 	JTextField noTf, noTf2, noTf3, // 무통장 텍스트필드
 	acTf, // account 텍스트필드
@@ -53,7 +56,7 @@ public class payment extends JPanel implements ActionListener {
 		account = new JRadioButton("실시간 계좌이체");
 		payco = new JRadioButton("PAYCO");
 		payBtn = new JButton("결제하기");
-
+		payBtn.addActionListener(this);
 		pay = new ButtonGroup();
 		pay.add(phone);
 		pay.add(noPassbook);
@@ -314,9 +317,11 @@ public class payment extends JPanel implements ActionListener {
 		pnlPa.add(pnlPa2);
 
 		// 모든 결제수단을 더하기
+
 		this.add(pnl, BorderLayout.NORTH);
 		this.add(pnl2, BorderLayout.CENTER);
 		this.add(pnl3, BorderLayout.SOUTH);
+		
 	}
 
 	@Override
@@ -339,6 +344,11 @@ public class payment extends JPanel implements ActionListener {
 			this.add(pnlA);
 		} else if (e.getSource() == payco) {
 			this.add(pnlPa);
+		}
+		if(e.getSource()==payBtn){
+			JOptionPane.showMessageDialog(null, "아직 구매 할 수 없습니다.", "Error", JOptionPane.ERROR_MESSAGE);
+			
+			
 		}
 
 		this.repaint();
