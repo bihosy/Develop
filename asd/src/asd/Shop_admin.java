@@ -1,38 +1,13 @@
 package asd;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.TabExpander;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.*;
+import java.io.*;
+import javax.imageio.*;
+import javax.swing.*;
+import javax.swing.table.*;
+import javax.swing.text.*;
 
 public class Shop_admin extends JFrame implements ActionListener, MouseListener {
 
@@ -257,8 +232,9 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		pnl_logoinfo.setPreferredSize(new Dimension(1000, 100));
 		pnl_logoinfo.setBackground(bakcc);
 		lb_Image2.setBounds(340, 0, 300, 100);
-		lb_WC.setBounds(800, 70, 200, 25);
+		lb_WC.setBounds(630, 70, 350, 25);
 		lb_WC.setFont(WC_Font);
+		lb_WC.setHorizontalAlignment(JLabel.RIGHT);
 
 		// lb_Image
 

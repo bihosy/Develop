@@ -1,22 +1,9 @@
 package asd;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class Notice extends JDialog implements ActionListener {
@@ -73,7 +60,8 @@ public class Notice extends JDialog implements ActionListener {
 		this.setUndecorated(true);
 		ta_nae.setEditable(false);
 		setLocationRelativeTo(null);
-		
+		Font Font_notice = new Font("돋움", Font.BOLD, 18);
+		lb_notice.setFont(Font_notice);
 		try {
 			fr = new FileReader(gr);
 			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기

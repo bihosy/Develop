@@ -3,7 +3,6 @@ package asd;
 import javax.swing.*;
 import javax.swing.GroupLayout.Group;
 import javax.swing.text.GapContent;
-
 import java.awt.*;
 import java.awt.event.*;
 
