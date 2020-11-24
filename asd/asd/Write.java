@@ -1,31 +1,15 @@
 package asd;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -86,8 +70,9 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 	JPanel pnl_north, pnl_north1, pnl_north2, pnl_middle, pnl_south;
 	JComboBox com_menu;
 	JLabel lb_title, lb_upload1, lb_upload2, lb_upload3, lb_image, lb_price, lb_size, lb_class;
-	JButton btn_reload, btn_preview;
+	JButton btn_reload, btn_cancel;
 	static JButton btn_finish;
+	
 	ImageIcon img;
 	JCheckBox cb_sizeS, cb_sizeM, cb_sizeL;
 	JComboBox cb_pro;
@@ -109,7 +94,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		tb_pants = new JTable(pants_model);
 		tb_shoes = new JTable(shoes_model);
 		// --------DB 테이블 관련 --------//
-
+		this.setUndecorated(true);
 		try {
 			fr = new FileReader(gr);
 			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
@@ -241,6 +226,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		Color color = new Color(176, 196, 222);
 		
 		btn_reload = new JButton("불러 오기");
+		btn_cancel = new JButton("취소");
 		
 		lb_title.setBounds(10, 20, 50, 25);
 		fd_title.setBounds(80, 20, 250, 25);
@@ -259,9 +245,11 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		
 		btn_finish = new JButton("등록");
 		btn_finish.setPreferredSize(new Dimension(90, 30));
+		btn_cancel.setPreferredSize(new Dimension(90, 30));
 		btn_finish.setBackground(color);
+		btn_cancel.setBackground(color);
 		
-		//btn_finish.setEnabled(false);
+		
 		pnl_north1.add(lb_image);
 
 		pnl_north2.add(lb_title);
@@ -279,6 +267,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 
 		lb_image.addMouseListener(this);
 		btn_finish.addActionListener(this);
+		btn_cancel.addActionListener(this);
 		cb_sizeS.addItemListener(this);
 		cb_sizeM.addItemListener(this);
 		cb_sizeL.addItemListener(this);
@@ -292,6 +281,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		
 		//pnl_south.add(btn_preview);
 		pnl_south.add(btn_finish);
+		pnl_south.add(btn_cancel);
 		
 		pnl_north.setBackground(Color.white);
 		pnl_middle.setBackground(Color.white);
@@ -308,6 +298,7 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		this.add(pnl_middle, "Center");
 		this.add(pnl_south, "South");
 
+		this.setResizable(false);
 		this.setVisible(true);
 	}
 
@@ -322,13 +313,16 @@ public class Write extends JFrame implements ActionListener, MouseListener, Item
 		String ta_chi = ta_contents.getText();
 		ta_chi = ta_chi.replace("\n","<br>");
 		
-/*		if(fd_title.getText().equals("") && fd_price.getText().equals("")
-				&& ta_contents.getText().equals("")) {
-			btn_finish.setEnabled(false);
+		if(e.getSource() == btn_cancel){
+			new Shop_admin();
+			this.setDefaultCloseOperation(1);
+			this.setVisible(false);
 		}
-			else {
-				btn_finish.setEnabled(true);
-			}*/
+		
+		
+		
+		
+		
 		if (e.getSource() == btn_finish) {
 			
 			if(fd_title.getText().equals("")){

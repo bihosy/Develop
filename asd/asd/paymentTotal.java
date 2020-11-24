@@ -2,13 +2,41 @@ package asd;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Group;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.GapContent;
+import javax.swing.text.PlainDocument;
+
+import asd.idSearch.JTextFieldLimit;
+
 import java.awt.*;
 import java.awt.event.*;
 
-public class paymentTotal extends JFrame implements ActionListener{
-	
-	
+public class paymentTotal extends JFrame implements ActionListener, KeyListener {
+
+	class JTextFieldLimit extends PlainDocument {
+		private int limit;
+
+		JTextFieldLimit(int limit) {
+			super();
+			this.limit = limit;
+		}
+
+		JTextFieldLimit(int limit, boolean upper) {
+			super();
+			this.limit = limit;
+		}
+
+		public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+			if (str == null)
+				return;
+
+			if ((getLength() + str.length()) <= limit) {
+				super.insertString(offset, str, attr);
+			}
+		}
+	}
+
 	JPanel pnl_outside = new JPanel(); // 전체 패널
 	JPanel pnl = new JPanel(); // 첫번째줄 //큰패널
 	JPanel pnl2 = new JPanel(); // 두번째줄
@@ -57,15 +85,15 @@ public class paymentTotal extends JFrame implements ActionListener{
 	JRadioButton rb2 = new JRadioButton("새로운 배송지");
 
 	JTextField tf = new JTextField(17);
-	
+
 	JTextField tf3 = new JTextField(20);
 	JTextField tf4 = new JTextField(20);
-	
-	String[] str = {"02","051","055","032","031"};
-	String[] str2 = {"010","011","016","017"};
+
+	String[] str = { "02", "051", "055", "032", "031" };
+	String[] str2 = { "010", "011", "016", "017" };
 	JComboBox cb = new JComboBox(str);
 	JComboBox cb2 = new JComboBox(str2);
-	
+
 	JTextField tf5 = new JTextField(4);
 	JTextField tf6 = new JTextField(4);
 	JTextField tf7 = new JTextField(4);
@@ -75,42 +103,18 @@ public class paymentTotal extends JFrame implements ActionListener{
 	JTextField tf11 = new JTextField(20);
 
 	JButton address_btn = new JButton("우편번호");
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	payment py = new payment();
-	
+
 	CusInfo ci = new CusInfo();
-	
+
 	JScrollPane sc;
 	JPanel pnls;
-	
+
 	public paymentTotal() {
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+		py.payBtn.addActionListener(this);
+
 		pnl.setLayout(new BorderLayout());
 		pnl2.setLayout(new BorderLayout());
 		pnl3.setLayout(new BorderLayout());
@@ -119,27 +123,25 @@ public class paymentTotal extends JFrame implements ActionListener{
 		pnl6.setLayout(new BorderLayout());
 		pnl7.setLayout(new BorderLayout());
 		pnl15.setLayout(new GridLayout(3, 0));
-		//pnl15.setBackground(Color.blue);
-		pnl8.setSize(150, 50); //패널 크기조정
+		// pnl15.setBackground(Color.blue);
+		pnl8.setSize(150, 50); // 패널 크기조정
 		pnl10.setSize(150, 50);
 		pnl12.setSize(150, 50);
 		pnl14.setSize(150, 50);
 		pnl16.setSize(150, 50);
 		pnl18.setSize(150, 50);
 		pnl20.setSize(150, 50);
-		
-	
 
 		pnl.add(pnl8);
 		pnl.add(pnl9);
 		pnl2.add(pnl10);
 		pnl2.add(pnl11);
 		pnl3.setLayout(null);
-		pnl12.setBounds(18,13,80,80);
-		pnl13.setBounds(153,13,200,80);
+		pnl12.setBounds(18, 13, 80, 80);
+		pnl13.setBounds(153, 13, 200, 80);
 		pnl3.add(pnl12);
 		pnl3.add(pnl13);
-		
+
 		pnl4.add(pnl14);
 		pnl4.add(pnl15);
 		pnl5.add(pnl16);
@@ -148,13 +150,9 @@ public class paymentTotal extends JFrame implements ActionListener{
 		pnl6.add(pnl19);
 		pnl7.add(pnl20);
 		pnl7.add(pnl21);
-		
-		
-		
-		
 
-		pnl_outside.setLayout(new GridLayout(7,1));
-		
+		pnl_outside.setLayout(new GridLayout(7, 1));
+
 		pnl8.add(lb_info);
 		pnl9.add(lb_Requiredinput);// 필수입력사항
 
@@ -164,15 +162,13 @@ public class paymentTotal extends JFrame implements ActionListener{
 		pnl12.add(lb_from);
 		pnl13.add(tf);// 텍스트필드
 		pnl13.setLayout(new FlowLayout());
-		
+
 		pnl14.add(lb_address);
 
 		pnl15.add(pnl22);
 		pnl15.add(pnl23);
 		pnl15.add(pnl24);
 
-		
-	
 		pnl22.add(tf3);
 		pnl22.add(lb_simpleaddress);
 		pnl23.add(tf4);
@@ -192,8 +188,7 @@ public class paymentTotal extends JFrame implements ActionListener{
 		pnl19.add(tf10);
 		pnl20.add(lb_deliverymessage);
 		pnl21.add(tf11);
-		
-		
+
 		pnl_outside.add(pnl);
 		pnl_outside.add(pnl2);
 		pnl_outside.add(pnl3);
@@ -201,52 +196,45 @@ public class paymentTotal extends JFrame implements ActionListener{
 		pnl_outside.add(pnl5);
 		pnl_outside.add(pnl6);
 		pnl_outside.add(pnl7);
-		
-		
-		
+
 		ButtonGroup begin = new ButtonGroup();
-		
+
 		begin.add(rb);
 		begin.add(rb2);
-		
+
 		rb.addActionListener(this);
 		rb2.addActionListener(this);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		setSize(630, 1000);
-		
-		setTitle("payment2");
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-		pnls=new JPanel(new GridLayout(0,1));
 
-		
-		
+		setSize(630, 1000);
+
+		setTitle("payment2");
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		pnls = new JPanel(new GridLayout(0, 1));
+
 		pnls.add(ci);
-		
+
 		pnls.add(pnl_outside);
-		
+
 		pnls.add(py);
 		pnls.setPreferredSize(new Dimension(590, 1800));
 		sc = new JScrollPane(pnls);
 		sc.getVerticalScrollBar().setUnitIncrement(16);
-		
-		
+		tf6.setDocument(new JTextFieldLimit(4));
+		tf7.setDocument(new JTextFieldLimit(4));
+		tf9.setDocument(new JTextFieldLimit(4));
+		tf10.setDocument(new JTextFieldLimit(4));
+
+		tf6.addKeyListener(this);
+		tf7.addKeyListener(this);
+		tf9.addKeyListener(this);
+		tf10.addKeyListener(this);
+
 		this.add(sc);
-		
+		this.setResizable(false);
 		setVisible(true);
 	}
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new paymentTotal();
@@ -254,9 +242,47 @@ public class paymentTotal extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
-		if(e.getSource()==rb){
+
+		if (e.getSource() == py.payBtn) {
+			if (ci.fd_reciever.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "주문자를 입력해주세요.", "주문자", JOptionPane.ERROR_MESSAGE);
+			} else if (ci.fd_address2.getText().equals("") || ci.fd_address3.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "주소를 입력해주세요.", "주소", JOptionPane.ERROR_MESSAGE);
+			}
+			else if (ci.fd_phone.getText().equals("") || ci.fd_phone2.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "전화번호를 입력해주세요.", "전화번호", JOptionPane.ERROR_MESSAGE);
+			}
+
+			else if (tf.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "받는사람을 입력해주세요.", "받는사람", JOptionPane.ERROR_MESSAGE);
+			} else if (tf3.getText().equals("") || tf4.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "주소를 입력해 주세요.", "주소", JOptionPane.ERROR_MESSAGE);
+			}
+
+			else if (tf9.getText().equals("") || tf10.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "전화번호를 입력해 주세요.", "전화번호", JOptionPane.ERROR_MESSAGE);
+			}
+
+			else if (py.noTf.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "입금자명을 입력해주세요.", "입금자명", JOptionPane.ERROR_MESSAGE);
+
+			} else if (py.nopYes.isSelected() == true
+					&& (py.noTf2.getText().equals("") || py.noTf3.getText().equals(""))) {
+				JOptionPane.showMessageDialog(null, "휴대폰 번호를 입력해주세요.", "휴대폰 번호", JOptionPane.ERROR_MESSAGE);
+
+			}
+
+			else {
+
+				JOptionPane.showMessageDialog(null, "미안합니다. 아직 구매하실 수 없습니다.", "미안", JOptionPane.ERROR_MESSAGE);
+				this.setDefaultCloseOperation(3);
+				
+				this.setVisible(false);
+			}
+
+		}
+
+		if (e.getSource() == rb) {
 			tf.setText(CusInfo.fd_reciever.getText());
 			cb.setSelectedIndex(CusInfo.cb_home.getSelectedIndex());
 			cb2.setSelectedIndex(CusInfo.cb_phone.getSelectedIndex());
@@ -267,7 +293,7 @@ public class paymentTotal extends JFrame implements ActionListener{
 			tf9.setText(CusInfo.fd_phone.getText());
 			tf10.setText(CusInfo.fd_phone2.getText());
 		}
-		if(e.getSource()==rb2){
+		if (e.getSource() == rb2) {
 			tf.setText("");
 			cb.setSelectedIndex(0);
 			cb2.setSelectedIndex(0);
@@ -279,9 +305,32 @@ public class paymentTotal extends JFrame implements ActionListener{
 			tf10.setText("");
 		}
 
-		}
-		
-		
 	}
 
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+		if (e.getSource() == tf6 || e.getSource() == tf7 || e.getSource() == tf9 || e.getSource() == tf10) {
+
+			char caracter = e.getKeyChar();
+			if (((caracter < '0') || (caracter > '9')) && (caracter != '\b')) {
+				e.consume();
+			}
+
+		}
+	}
+
+}

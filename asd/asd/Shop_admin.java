@@ -57,6 +57,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 	static int sizenum;
 	static int sizesize = 0;
 	static int naesize = 0;
+	static int writechk=0;
 	int selnum = 0;
 	Dimension pnlsize = new Dimension();
 
@@ -230,6 +231,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		this.setSize(1000, 1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 
 		pnl.setLayout(new BorderLayout());
 		pnl_menu.setLayout(new BorderLayout());
@@ -302,7 +304,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 			}
 
-			System.out.println();
+			//System.out.println();
 
 			try {
 				image = ImageIO.read(new File(img_gr));
@@ -381,10 +383,14 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 		new Shop_admin();
 
 	}
+	
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+
+
 
 		if (e.getSource() == btn_write) {
 			new Write();
@@ -426,7 +432,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 				}
 
-				System.out.println();
+				//System.out.println();
 
 				try {
 					image = ImageIO.read(new File(img_gr));
@@ -528,7 +534,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 				}
 
-				System.out.println();
+				//System.out.println();
 
 				try {
 					image = ImageIO.read(new File(img_gr));
@@ -631,7 +637,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 				}
 
-				System.out.println();
+				//System.out.println();
 
 				try {
 					image = ImageIO.read(new File(img_gr));
@@ -766,12 +772,12 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 		}
 		if (e.getSource() == buybuy) {
-			System.out.println("3");
+			//System.out.println("3");
 		}
 		if (e.getSource() == btn_del) {
 
 			if (seltbnum == 0) {
-				System.out.println("Test 항목은 지울 수 없습니다.");
+				//System.out.println("Test 항목은 지울 수 없습니다.");
 			}
 
 			else {
@@ -993,7 +999,7 @@ public class Shop_admin extends JFrame implements ActionListener, MouseListener 
 
 				}
 
-				System.out.println();
+				//System.out.println();
 
 				try {
 					image = ImageIO.read(new File(img_gr));

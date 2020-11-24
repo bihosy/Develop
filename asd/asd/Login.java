@@ -3,16 +3,7 @@ package asd;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class Login extends JFrame implements ActionListener, MouseListener {

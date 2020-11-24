@@ -131,7 +131,7 @@ public class pwChan extends JDialog implements ActionListener {
 
 		if (pf_newPW.getText().equals(pf_newPWC.getText()) ) {
 			Table_model.setValueAt(pf_newPWC.getText(), pwChanRow, 1);
-			System.out.println(Table_model.getValueAt(pwChanRow, 1));
+			//System.out.println(Table_model.getValueAt(pwChanRow, 1));
 
 			try {
 				fw = new FileWriter(gr);

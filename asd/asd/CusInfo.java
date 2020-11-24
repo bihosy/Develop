@@ -1,28 +1,16 @@
 package asd;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.table.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import asd.idSearch.JTextFieldLimit;
 
 
 /*
@@ -113,7 +101,7 @@ class Postcode extends JFrame implements ActionListener {
 }
 */
 	//구매자 정보 입력 창
-public class CusInfo extends JPanel{
+public class CusInfo extends JPanel implements KeyListener{
 	JPanel pn_info, pn_first, pn_first1, pn_first2, pn_second, pn_second1, pn_second2, pn_third, pn_third1, pn_third2,
 			pn_fourth, pn_fourth1, pn_fourth2, pn_fifth, pn_fifth1, pn_fifth2, pn_sixth, pn_sixth1, pn_sixth2,
 			pn_seventh, pn_seventh1, pn_seventh2;
@@ -136,6 +124,39 @@ public class CusInfo extends JPanel{
 	String[] str = { "직접입력", "naver.com", "gmail.com", "daum.net" };
 	String[] str1 =  {"02","051","055","032","031"};
 	String[] str2 = { "010  ", "011  ", "016  ", "017  "};
+	
+	
+	
+	
+	
+	
+	class JTextFieldLimit extends PlainDocument {
+		  private int limit;
+		  JTextFieldLimit(int limit) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  JTextFieldLimit(int limit, boolean upper) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		    if (str == null)
+		      return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
+		}
+	
+	
+	
+	
+	
+	
 
 	public CusInfo() {
 		this.setSize(600, 400);
@@ -194,6 +215,13 @@ public class CusInfo extends JPanel{
 		fd_phone2 = new JTextField(7);
 		fd_email1 = new JTextField(10);
 		fd_email2 = new JTextField(10);
+		
+		
+		
+		fd_phone.setDocument(new JTextFieldLimit(4));
+		fd_phone2.setDocument(new JTextFieldLimit(4));
+		fd_home.setDocument(new JTextFieldLimit(4));
+		fd_home2.setDocument(new JTextFieldLimit(4));
 
 		btn = new JButton("  우편번호  ");
 		btn.setPreferredSize(new Dimension(103, 30));
@@ -241,6 +269,11 @@ public class CusInfo extends JPanel{
 		pn_info.add(pn_fourth2);
 		//pn_info.add(pn_fifth1);
 		//pn_info.add(pn_fifth2);
+		
+		fd_home.addKeyListener(this);
+		fd_home2.addKeyListener(this);
+		fd_phone.addKeyListener(this);
+		fd_phone2.addKeyListener(this);
 
 		this.add(pn_info);
 		this.setVisible(true);
@@ -269,4 +302,29 @@ public class CusInfo extends JPanel{
 
 	}
 	*/
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == fd_home || e.getSource() == fd_home2 || e.getSource() == fd_phone || e.getSource() == fd_phone2) {
+
+			char caracter = e.getKeyChar();
+			if (((caracter < '0') || (caracter > '9')) && (caracter != '\b')) {
+				e.consume();
+			}
+
+		}
+	}
 }

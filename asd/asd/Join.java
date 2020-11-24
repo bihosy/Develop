@@ -1,11 +1,8 @@
 package asd;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,20 +15,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.security.acl.Group;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,23 +32,25 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class Join extends JDialog implements ActionListener, KeyListener {
-	//--------DB 테이블 관련 --------//
+
+	// --------DB 테이블 관련 --------//
 	String header[] = { "ID", "PW", "이름", "성별", "생년월일", "휴대폰", "주소", "권한" };
 	String contents[][] = {};
 	String s = "";
 	String YMD = ""; // 생년월일
 	DefaultTableModel Table_model;
-	//--------DB 테이블 관련 --------//
-	
+	// --------DB 테이블 관련 --------//
+
 	JPanel P; // 배경화면 패널
 	JPanel pnl_YMD; // 생년월일 패널
 
@@ -64,7 +58,7 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 	JLabel lb_PW; // 패스워드 라벨
 	JLabel lb_PWC; // 패스워드 확인(password Check) 라벨
 	JLabel lb_Name; // 이름 라벨
-	JLabel lb_Gd; //성별 라벨(Gender)
+	JLabel lb_Gd; // 성별 라벨(Gender)
 	JLabel lb_YMD; // 생년월일 라벨(Year, Month, Day)
 	JLabel lb_M; // 휴대폰번호 작대기(010-0000-0000에서 -)
 	JLabel lb_M2; // 휴대폰번호 작대기(010-0000-0000에서 -)
@@ -81,9 +75,11 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 	JTextField tf_Phone3; // 휴대폰 끝자리
 	JTextField tf_Add1; // 주소 텍스트필드1
 	JTextField tf_Add2; // 주소 텍스트필드2
-	
+
 	JComboBox cb_Phone1; // 휴대폰 앞자리(010, 011등)
-	String cbData[] = {"010", "011", "012", "015", "016", "017", "018", "019"}; // 휴대폰 앞자리 배열
+	String cbData[] = { "010", "011", "012", "015", "016", "017", "018", "019" }; // 휴대폰
+																					// 앞자리
+																					// 배열
 
 	JRadioButton rb_Man; // 남자 라디오버튼
 	JRadioButton rb_Woman; // 여자 라디오버튼
@@ -93,7 +89,7 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 
 	JTable tb_Mem;// 테이블 생성
 
-	//----------------파일 리드라이트-----------//
+	// ----------------파일 리드라이트-----------//
 	BufferedReader br = null;// 버퍼를 이용해서 만들어진 파일 읽기도구
 	PrintWriter pw = null;// 버퍼를 이용해서 만들어진 파일 쓰기도구
 
@@ -103,40 +99,64 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 	String gr = "Members.txt";// 경로저장
 	BufferedImage background = null;
 
-	String l;//파일 읽어서 문자열 저장
-	
-	//-----------------------달력생성----------------------//
+	String l;// 파일 읽어서 문자열 저장
+
+	boolean already = false;
+
+	// -----------------------달력생성----------------------//
 	UtilDateModel model = new UtilDateModel();
 	JDatePanelImpl datePanel = new JDatePanelImpl(model);
 	JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
 	private String datepattern = "yyyy-MM-dd";
 	private SimpleDateFormat dateformatter = new SimpleDateFormat(datepattern);
-	//-----------------------달력생성----------------------//
-	
-	//----------------파일 리드라이트-----------//
+	// -----------------------달력생성----------------------//
 
-	public Join(Login lg){
-		super(lg, true);
-		
-		try {
-		    background = ImageIO.read(new File("f.jpg"));
-		} catch (IOException e) {
-		    e.printStackTrace();
+	// ----------------파일 리드라이트-----------//
+
+	class JTextFieldLimit extends PlainDocument {
+		private int limit;
+
+		JTextFieldLimit(int limit) {
+			super();
+			this.limit = limit;
 		}
-		
+
+		JTextFieldLimit(int limit, boolean upper) {
+			super();
+			this.limit = limit;
+		}
+
+		public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+			if (str == null)
+				return;
+
+			if ((getLength() + str.length()) <= limit) {
+				super.insertString(offset, str, attr);
+			}
+		}
+	}
+
+	public Join(Login lg) {
+		super(lg, true);
+
+		try {
+			background = ImageIO.read(new File("f.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		Image dimg = background.getScaledInstance(480, 900, Image.SCALE_SMOOTH);
-		
-		P = new JPanel(null)
-		{
-			public void paintComponent(Graphics g){
-				g.drawImage(dimg, 0, 0,null);
+
+		P = new JPanel(null) {
+			public void paintComponent(Graphics g) {
+				g.drawImage(dimg, 0, 0, null);
 				setOpaque(false);
 				super.paintComponent(g);
-				}
-			};
-			
+			}
+		};
+
 		this.add(P);
-		
+
 		Table_model = new DefaultTableModel(contents, header);
 		tb_Mem = new JTable(Table_model);
 
@@ -166,8 +186,7 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 		btn_Cnl = new JButton("취소");
 		cb_Phone1 = new JComboBox(cbData);
 		pnl_YMD = new JPanel();
-		
-		
+
 		try {
 			fr = new FileReader(gr);
 			br = new BufferedReader(fr);// 읽어온 파일 버퍼에 객체 담기
@@ -176,9 +195,9 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 
 				String[] str = l.split("/");
 
-				System.out.print(str[0] + "/");
-				System.out.print(str[1] + "/");
-				System.out.println(str[2]);
+				// System.out.print(str[0] + "/");
+				// System.out.print(str[1] + "/");
+				// System.out.println(str[2]);
 
 				Table_model.addRow(str);
 				// idx = Integer.parseInt(str[0]) + 1;
@@ -198,10 +217,7 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 				e1.printStackTrace();
 			}
 		}
-		
 
-
-		
 		lb_ID.setBounds(130, 50, 50, 25);
 		tf_ID.setBounds(130, 80, 200, 25);
 		lb_PW.setBounds(130, 130, 70, 25);
@@ -224,20 +240,20 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 		lb_Add.setBounds(130, 630, 50, 25);
 		tf_Add1.setBounds(130, 660, 200, 25);
 		tf_Add2.setBounds(130, 690, 200, 25);
-		lb_JB.setBounds(170,108, 200, 25);
+		lb_JB.setBounds(170, 108, 200, 25);
 		btn_Reg.setBounds(125, 790, 100, 40);
 		btn_Cnl.setBounds(235, 790, 100, 40);
-		
+
 		model.setDate(2000, 1, 1);
 		pnl_YMD.add(datePicker);
 		pnl_YMD.setBackground(new Color(0, 0, 0, 0));
-		
+
 		rb_Man.setOpaque(false);
 		rb_Woman.setOpaque(false);
 
 		JScrollPane sp = new JScrollPane(tb_Mem);
 		ButtonGroup bg = new ButtonGroup(); // 라디오버튼 그룹 생성
-		
+
 		lb_ID.setForeground(Color.white);
 		lb_PW.setForeground(Color.white);
 		lb_PWC.setForeground(Color.white);
@@ -280,41 +296,66 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 		P.add(btn_Reg);
 		P.add(btn_Cnl);
 		P.add(lb_JB);
-		//this.add(sp);
+		// this.add(sp);
 
 		btn_Reg.addActionListener(this);
 		rb_Man.addActionListener(this);
 		rb_Woman.addActionListener(this);
 		tf_ID.addKeyListener(this);
 		btn_Cnl.addActionListener(this);
+		// tf_Phone1.addKeyListener(this);
+		tf_Phone2.addKeyListener(this);
+		tf_Phone3.addKeyListener(this);
+		tf_Phone2.setDocument(new JTextFieldLimit(4));
+		tf_Phone3.setDocument(new JTextFieldLimit(4));
 
 		this.setTitle("회원가입");
 		this.setSize(480, 900);
 		setLocationRelativeTo(null);
 		this.setVisible(true);
-		
+
 		this.setResizable(false);
-		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String Phone_num = cb_Phone1.getSelectedItem() + "-" + tf_Phone2.getText() + "-" + tf_Phone3.getText();
 
 		if (e.getSource() == rb_Man) {
 			s = "0";
 		}
-		
+
 		if (e.getSource() == rb_Woman) {
 			s = "1";
 		}
-		
 
 		if (e.getSource() == btn_Reg) {
+
+			try {
+				Date selectedDate = (Date) datePicker.getModel().getValue();
+				YMD = (String) dateformatter.format(selectedDate);
+			} catch (Exception e2) {
+
+			}
+
+			for (int i = 0; i < tb_Mem.getRowCount(); i++) {
+				if (Table_model.getValueAt(i, 2).equals(tf_Name.getText()) && Table_model.getValueAt(i, 4).equals(YMD)
+						&& Table_model.getValueAt(i, 5).equals(Phone_num)) {
+					already = true;
+					// System.out.println("이름 : " + tf_Name.getText() + ", 생년월일
+					// : " + YMD + ", 휴대전화번호 : " + Phone_num);
+					break;
+				} else {
+					already = false;
+				}
+			}
 
 			if (tf_ID.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.", "아이디 입력", JOptionPane.ERROR_MESSAGE);
 			} else if (lb_JB.getText().equals("중복된 ID 입니다.")) {
-				JOptionPane.showMessageDialog(null, "아이디가 이미 존재합니다. 다른 아이디를 입력해주세요.", "아이디 중복", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "아이디가 이미 존재합니다. 다른 아이디를 입력해주세요.", "아이디 중복",
+						JOptionPane.ERROR_MESSAGE);
 			} else if (pf_PW.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.", "비밀번호 입력", JOptionPane.ERROR_MESSAGE);
 			} else if (pf_PWC.getText().equals("")) {
@@ -322,24 +363,22 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 			} else if (tf_Name.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "이름을 입력해주세요.", "이름 입력", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			else if (s.equals("")){
+
+			else if (s.equals("")) {
 				JOptionPane.showMessageDialog(null, "성별을 체크해주세요.", "성별 체크", JOptionPane.ERROR_MESSAGE);
-			}
-			else if(datePicker.getModel().getValue() == null) {
+			} else if (datePicker.getModel().getValue() == null) {
 				JOptionPane.showMessageDialog(null, "생년월일을 입력해주세요.", "생년월일 입력 ", JOptionPane.ERROR_MESSAGE);
 			}
 
-			else if (tf_Phone2.getText().equals("")|| tf_Phone3.getText().equals("")) {
+			else if (tf_Phone2.getText().equals("") || tf_Phone3.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "휴대전화번호를 입력해주세요.", "휴대전화번호 입력", JOptionPane.ERROR_MESSAGE);
 			} else if (tf_Add1.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "주소를 입력해주세요.", "주소 입력", JOptionPane.ERROR_MESSAGE);
+			} else if (already) {
+				JOptionPane.showMessageDialog(null, "이미 동일한 개인정보로 회원가입 되어있습니다.", "이미 회원가입됨", JOptionPane.ERROR_MESSAGE);
 			}
 
 			else if (pf_PW.getText().equals(pf_PWC.getText())) {
-				
-				Date selectedDate = (Date) datePicker.getModel().getValue();
-				String YMD = (String)dateformatter.format(selectedDate);
 
 				String[] memstr = { "id", "pw", "name", "s", "ymd", "phone", "address", "admin" };
 				memstr[0] = tf_ID.getText();
@@ -397,26 +436,17 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 			}
 
 			else {
-				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다. 다시 입력해주세요.", "비밀번호 확인 오류", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다. 다시 입력해주세요.", "비밀번호 확인 오류",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		if(e.getSource() == btn_Cnl){
-			this.setDefaultCloseOperation(3);
+		if (e.getSource() == btn_Cnl) {
+			this.setDefaultCloseOperation(1);
 			setVisible(false);
-			System.out.println(YMD);
+			// System.out.println(YMD);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// }
 
 	public static void main(String args[]) {
 		new Join(null);
@@ -431,26 +461,44 @@ public class Join extends JDialog implements ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-		String id = tf_ID.getText();
-		for (int k = 0; k < tb_Mem.getRowCount(); k++) {
-			if (Table_model.getValueAt(k, 0).equals(id)) {
-				lb_JB.setText("중복된 ID 입니다.");
-				lb_JB.setForeground(Color.RED);
-				break;
+		if (e.getSource() == tf_ID) {
+			String id = tf_ID.getText();
+			for (int k = 0; k < tb_Mem.getRowCount(); k++) {
+				if (tf_ID.getText().equals("")) {
+					lb_JB.setText("사용할 수 없는 ID 입니다.");
+					lb_JB.setForeground(Color.RED);
+					break;
+				} else if (tf_ID.getText().contains("/")||tf_ID.getText().contains("\\")) {
+					lb_JB.setText("사용할 수 없는 ID 입니다.");
+					lb_JB.setForeground(Color.RED);
+					break;
+				} else {
+
+					if (Table_model.getValueAt(k, 0).equals(id)) {
+						lb_JB.setText("중복된 ID 입니다.");
+						lb_JB.setForeground(Color.RED);
+						break;
+					} else {
+						lb_JB.setText("사용가능한 ID 입니다.");
+						lb_JB.setForeground(Color.GREEN);
+					}
+				}
+
 			}
-			else{
-				lb_JB.setText("사용가능한 ID 입니다.");
-				lb_JB.setForeground(Color.GREEN);
-			}
-				
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		if (e.getSource() == tf_Phone2 || e.getSource() == tf_Phone3) {
 
+			char caracter = e.getKeyChar();
+			if (((caracter < '0') || (caracter > '9')) && (caracter != '\b')) {
+				e.consume();
+			}
 
-		// TODO Auto-generated method stub
+		}
 
 	}
+
 }

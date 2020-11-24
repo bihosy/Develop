@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,12 +30,39 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
+import asd.idSearch.JTextFieldLimit;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-public class pwSearch extends JDialog implements ActionListener {
+public class pwSearch extends JDialog implements ActionListener , KeyListener{
+	
+	
+	class JTextFieldLimit extends PlainDocument {
+		  private int limit;
+		  JTextFieldLimit(int limit) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  JTextFieldLimit(int limit, boolean upper) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		    if (str == null)
+		      return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
+		}
 
 	// --------DB 테이블 관련 --------//
 	String header[] = { "ID", "PW", "이름", "성별", "생년월일", "휴대폰", "주소", "권한" };
@@ -41,6 +70,7 @@ public class pwSearch extends JDialog implements ActionListener {
 	String s = "";
 	DefaultTableModel Table_model;
 	JTable tb_Mem;
+	String YMD;
 	// --------DB 테이블 관련 --------//
 
 	// ----------------파일 리드라이트-----------//
@@ -175,7 +205,12 @@ public class pwSearch extends JDialog implements ActionListener {
 		P.add(lb_M);
 		P.add(lb_M2);
 		P.add(pnl_YMD);
+		tf_Phone2.setDocument(new JTextFieldLimit(4));
+		tf_Phone3.setDocument(new JTextFieldLimit(4));
 
+		tf_Phone2.addKeyListener(this);
+		tf_Phone3.addKeyListener(this);
+		
 		this.setVisible(true);
 		this.setResizable(false);
 	}
@@ -183,9 +218,10 @@ public class pwSearch extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int i = 0;
-		
-		Date selectedDate = (Date) datePicker.getModel().getValue();
-		String YMD = (String)dateformatter.format(selectedDate);
+		try {
+			Date selectedDate = (Date) datePicker.getModel().getValue();
+			YMD = (String)dateformatter.format(selectedDate);
+		} catch(Exception e2){}
 		
 		try {
 			fr = new FileReader(gr);
@@ -221,7 +257,7 @@ public class pwSearch extends JDialog implements ActionListener {
 			if (Table_model.getValueAt(k, 0).equals(id)&&Table_model.getValueAt(k, 2).equals(name) &&
 					Table_model.getValueAt(k, 5).equals(phone) && Table_model.getValueAt(k,  4).equals(YMD)) {
 
-				System.out.println(Table_model.getValueAt(k, 1));
+				//System.out.println(Table_model.getValueAt(k, 1));
 				i = 1;
 				pwChan.pwChanRow = k;
 				new pwChan(null);
@@ -243,6 +279,31 @@ public class pwSearch extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new pwSearch(null);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == tf_Phone2 || e.getSource() == tf_Phone3) {
+
+			char caracter = e.getKeyChar();
+			if (((caracter < '0') || (caracter > '9')) && (caracter != '\b')) {
+				e.consume();
+			}
+
+		}
 	}
 
 }
